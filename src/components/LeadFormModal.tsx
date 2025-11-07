@@ -12,6 +12,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 import { Send } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
+import { supabase } from "@/integrations/supabase/client";
 
 interface LeadFormModalProps {
   open: boolean;
@@ -29,27 +30,67 @@ export const LeadFormModal = ({ open, onOpenChange }: LeadFormModalProps) => {
     challenge: "",
   });
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     
-    // Here you would typically send the data to your backend
-    console.log("Lead form submitted:", formData);
-    
-    toast({
-      title: "Sucesso! 🎉",
-      description: "Um especialista entrará em contato em breve.",
-    });
-    
-    // Reset form and close modal
-    setFormData({
-      name: "",
-      company: "",
-      phone: "",
-      email: "",
-      segment: "",
-      challenge: "",
-    });
-    onOpenChange(false);
+    try {
+      // Validate email format
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      if (!emailRegex.test(formData.email)) {
+        toast({
+          title: "Email inválido",
+          description: "Por favor, insira um email válido.",
+          variant: "destructive",
+        });
+        return;
+      }
+
+      // Save lead to database
+      const { error: dbError } = await supabase
+        .from("leads")
+        .insert([formData]);
+
+      if (dbError) {
+        console.error("Database error:", dbError);
+        throw new Error("Erro ao salvar os dados");
+      }
+
+      // Send confirmation emails
+      const { error: emailError } = await supabase.functions.invoke(
+        "send-lead-email",
+        {
+          body: formData,
+        }
+      );
+
+      if (emailError) {
+        console.error("Email error:", emailError);
+        // Continue anyway, as the lead was saved
+      }
+
+      toast({
+        title: "Sucesso! 🎉",
+        description: "Um especialista entrará em contato em breve.",
+      });
+
+      // Reset form and close modal
+      setFormData({
+        name: "",
+        company: "",
+        phone: "",
+        email: "",
+        segment: "",
+        challenge: "",
+      });
+      onOpenChange(false);
+    } catch (error) {
+      console.error("Submit error:", error);
+      toast({
+        title: "Erro ao enviar",
+        description: "Tente novamente ou entre em contato diretamente.",
+        variant: "destructive",
+      });
+    }
   };
 
   const handleChange = (

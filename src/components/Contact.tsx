@@ -5,6 +5,7 @@ import { Label } from "@/components/ui/label";
 import { Mail, Phone, Send } from "lucide-react";
 import { useState } from "react";
 import { useToast } from "@/hooks/use-toast";
+import { supabase } from "@/integrations/supabase/client";
 
 interface ContactProps {
   onOpenForm: () => void;
@@ -21,26 +22,66 @@ export const Contact = ({ onOpenForm }: ContactProps) => {
     challenge: "",
   });
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     
-    // Here you would typically send the data to your backend
-    console.log("Form submitted:", formData);
-    
-    toast({
-      title: "Mensagem enviada!",
-      description: "Em breve um especialista entrará em contato.",
-    });
-    
-    // Reset form
-    setFormData({
-      name: "",
-      company: "",
-      phone: "",
-      email: "",
-      segment: "",
-      challenge: "",
-    });
+    try {
+      // Validate email format
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      if (!emailRegex.test(formData.email)) {
+        toast({
+          title: "Email inválido",
+          description: "Por favor, insira um email válido.",
+          variant: "destructive",
+        });
+        return;
+      }
+
+      // Save lead to database
+      const { error: dbError } = await supabase
+        .from("leads")
+        .insert([formData]);
+
+      if (dbError) {
+        console.error("Database error:", dbError);
+        throw new Error("Erro ao salvar os dados");
+      }
+
+      // Send confirmation emails
+      const { error: emailError } = await supabase.functions.invoke(
+        "send-lead-email",
+        {
+          body: formData,
+        }
+      );
+
+      if (emailError) {
+        console.error("Email error:", emailError);
+        // Continue anyway, as the lead was saved
+      }
+
+      toast({
+        title: "Mensagem enviada!",
+        description: "Em breve um especialista entrará em contato.",
+      });
+
+      // Reset form
+      setFormData({
+        name: "",
+        company: "",
+        phone: "",
+        email: "",
+        segment: "",
+        challenge: "",
+      });
+    } catch (error) {
+      console.error("Submit error:", error);
+      toast({
+        title: "Erro ao enviar",
+        description: "Tente novamente ou entre em contato diretamente.",
+        variant: "destructive",
+      });
+    }
   };
 
   const handleChange = (
