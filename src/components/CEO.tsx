@@ -26,8 +26,9 @@ export const CEO = () => {
               </div>
 
               <h2 className="text-4xl md:text-5xl font-bold text-foreground">
-                Sobre o CEO
+                Fellipe de Sá
               </h2>
+              <p className="text-xl text-muted-foreground font-medium">CEO & Fundador</p>
 
               <div className="relative">
                 <Quote className="absolute -top-2 -left-2 w-12 h-12 text-primary/20" />

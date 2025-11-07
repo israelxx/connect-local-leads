@@ -99,10 +99,10 @@ export const Contact = ({ onOpenForm }: ContactProps) => {
                 <div>
                   <div className="text-sm text-muted-foreground">Telefone</div>
                   <a
-                    href="tel:+5574999308912"
+                    href="tel:+5574999981122"
                     className="text-foreground font-medium hover:text-primary transition-colors"
                   >
-                    (74) 99930-8912
+                    (74) 99998-1122
                   </a>
                 </div>
               </div>
