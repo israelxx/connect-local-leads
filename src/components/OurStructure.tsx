@@ -12,13 +12,48 @@ export const OurStructure = () => {
   const sectionRef = useRef<HTMLDivElement>(null);
   const imageRefs = useRef<(HTMLDivElement | null)[]>([]);
   const images = [
-    { src: structure1, alt: "Estrutura Pro Connect - Ambiente 1" },
-    { src: structure2, alt: "Estrutura Pro Connect - Ambiente 2" },
-    { src: structure3, alt: "Estrutura Pro Connect - Ambiente 3" },
-    { src: structure4, alt: "Estrutura Pro Connect - Ambiente 4" },
-    { src: structure5, alt: "Estrutura Pro Connect - Ambiente 5" },
-    { src: structure6, alt: "Estrutura Pro Connect - Ambiente 6" },
-    { src: structure7, alt: "Estrutura Pro Connect - Ambiente 7" },
+    { 
+      src: structure1, 
+      alt: "Estrutura Pro Connect - Ambiente 1",
+      title: "Espaço de Trabalho",
+      description: "Ambiente moderno e equipado para desenvolvimento de projetos"
+    },
+    { 
+      src: structure2, 
+      alt: "Estrutura Pro Connect - Ambiente 2",
+      title: "Sala de Reuniões",
+      description: "Espaço ideal para alinhamentos estratégicos e apresentações"
+    },
+    { 
+      src: structure3, 
+      alt: "Estrutura Pro Connect - Ambiente 3",
+      title: "Estúdio de Criação",
+      description: "Equipado com tecnologia de ponta para produção de conteúdo"
+    },
+    { 
+      src: structure4, 
+      alt: "Estrutura Pro Connect - Ambiente 4",
+      title: "Área de Colaboração",
+      description: "Espaço projetado para brainstorming e trabalho em equipe"
+    },
+    { 
+      src: structure5, 
+      alt: "Estrutura Pro Connect - Ambiente 5",
+      title: "Estação de Design",
+      description: "Área dedicada à criação visual e desenvolvimento criativo"
+    },
+    { 
+      src: structure6, 
+      alt: "Estrutura Pro Connect - Ambiente 6",
+      title: "Centro de Operações",
+      description: "Monitoramento e gestão de campanhas em tempo real"
+    },
+    { 
+      src: structure7, 
+      alt: "Estrutura Pro Connect - Ambiente 7",
+      title: "Espaço Corporativo",
+      description: "Ambiente profissional para atendimento e consultorias"
+    },
   ];
 
   useEffect(() => {
@@ -109,8 +144,17 @@ export const OurStructure = () => {
                   loading="lazy"
                 />
               </div>
-              <div className="absolute inset-0 bg-gradient-to-t from-background/90 via-background/30 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+              <div className="absolute inset-0 bg-gradient-to-t from-background/95 via-background/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
               <div className="absolute inset-0 border-2 border-primary/0 group-hover:border-primary/30 rounded-xl transition-all duration-500" />
+              
+              <div className="absolute bottom-0 left-0 right-0 p-6 translate-y-full group-hover:translate-y-0 transition-transform duration-500">
+                <h3 className="text-xl font-bold text-foreground mb-2">
+                  {image.title}
+                </h3>
+                <p className="text-sm text-muted-foreground">
+                  {image.description}
+                </p>
+              </div>
             </div>
           ))}
         </div>
