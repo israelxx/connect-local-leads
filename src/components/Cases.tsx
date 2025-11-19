@@ -31,7 +31,7 @@ const cases = [
   {
     name: "Bruna Braga",
     metric: "+250%",
-    description: "Engajamento nas redes",
+    description: "Aumento em leads qualificados de alto padrão",
     icon: Users,
     image: case4,
   },
