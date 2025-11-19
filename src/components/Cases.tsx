@@ -4,7 +4,7 @@ import case1 from "@/assets/case-1.png";
 import case2 from "@/assets/case-2.png";
 import case3 from "@/assets/case-3.png";
 import case4 from "@/assets/case-4.png";
-import case5 from "@/assets/case-5.png";
+import caseAndrei from "@/assets/case-andrei.png";
 
 const cases = [
   {
@@ -40,7 +40,7 @@ const cases = [
     metric: "+170%",
     description: "Conversão em vendas",
     icon: TrendingUp,
-    image: case5,
+    image: caseAndrei,
   },
 ];
 
