@@ -1,5 +1,10 @@
 import { TrendingUp, DollarSign, Users } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
+import case1 from "@/assets/case-1.png";
+import case2 from "@/assets/case-2.png";
+import case3 from "@/assets/case-3.png";
+import case4 from "@/assets/case-4.png";
+import case5 from "@/assets/case-5.png";
 
 const cases = [
   {
@@ -7,30 +12,35 @@ const cases = [
     metric: "+150%",
     description: "Crescimento em vendas",
     icon: TrendingUp,
+    image: case1,
   },
   {
     name: "FrutValle",
     metric: "+200%",
     description: "Aumento em leads qualificados",
     icon: Users,
+    image: case2,
   },
   {
     name: "Pedacinho do Céu",
     metric: "+180%",
     description: "ROI em campanhas",
     icon: DollarSign,
+    image: case3,
   },
   {
     name: "Bruna Braga",
     metric: "+250%",
     description: "Engajamento nas redes",
     icon: Users,
+    image: case4,
   },
   {
     name: "Andrei Gonçalves",
     metric: "+170%",
     description: "Conversão em vendas",
     icon: TrendingUp,
+    image: case5,
   },
 ];
 
@@ -78,6 +88,15 @@ export const Cases = () => {
                   <p className="text-sm text-muted-foreground">
                     {item.description}
                   </p>
+                </div>
+
+                {/* Case Image */}
+                <div className="mt-4 rounded-lg overflow-hidden border border-border/50 shadow-lg">
+                  <img 
+                    src={item.image} 
+                    alt={`Resultados ${item.name}`}
+                    className="w-full h-auto object-cover group-hover:scale-105 transition-transform duration-500"
+                  />
                 </div>
               </CardContent>
             </Card>
