@@ -61,7 +61,7 @@ export const PrimeHub = ({ onOpenForm }: PrimeHubProps) => {
               <Button
                 onClick={onOpenForm}
                 size="lg"
-                className="bg-primary hover:bg-primary/90 text-primary-foreground px-8 py-6 text-lg font-semibold rounded-lg shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105"
+                className="bg-primary hover:bg-primary/90 text-primary-foreground px-4 md:px-8 py-3 md:py-6 text-sm md:text-lg font-semibold rounded-lg shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105 w-full md:w-auto"
               >
                 Quero saber mais sobre o PRIME HUB
               </Button>
