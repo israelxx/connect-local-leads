@@ -38,8 +38,8 @@ const cases = [
   {
     name: "Andrei Gonçalves",
     metric: "+170%",
-    description: "Conversão em vendas",
-    icon: TrendingUp,
+    description: "Crescimento em engajamento e seguidores",
+    icon: Users,
     image: caseAndrei,
   },
 ];
