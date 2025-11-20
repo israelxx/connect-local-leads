@@ -17,9 +17,10 @@ import { supabase } from "@/integrations/supabase/client";
 interface LeadFormModalProps {
   open: boolean;
   onOpenChange: (open: boolean) => void;
+  serviceType?: 'standard' | 'prime_hub';
 }
 
-export const LeadFormModal = ({ open, onOpenChange }: LeadFormModalProps) => {
+export const LeadFormModal = ({ open, onOpenChange, serviceType = 'standard' }: LeadFormModalProps) => {
   const { toast } = useToast();
   const [formData, setFormData] = useState({
     name: "",
@@ -49,7 +50,7 @@ export const LeadFormModal = ({ open, onOpenChange }: LeadFormModalProps) => {
       // Save lead to database
       const { error: dbError } = await supabase
         .from("leads")
-        .insert([formData]);
+        .insert([{ ...formData, service_type: serviceType }]);
 
       if (dbError) {
         console.error("Database error:", dbError);
@@ -60,7 +61,7 @@ export const LeadFormModal = ({ open, onOpenChange }: LeadFormModalProps) => {
       const { error: emailError } = await supabase.functions.invoke(
         "send-lead-email",
         {
-          body: formData,
+          body: { ...formData, service_type: serviceType },
         }
       );
 
@@ -109,10 +110,12 @@ export const LeadFormModal = ({ open, onOpenChange }: LeadFormModalProps) => {
       <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto">
         <DialogHeader>
           <DialogTitle className="text-2xl font-bold">
-            Fale com um Especialista
+            {serviceType === 'prime_hub' ? 'Consultoria PRIME HUB' : 'Fale com um Especialista'}
           </DialogTitle>
           <DialogDescription>
-            Preencha o formulário abaixo e nossa equipe entrará em contato para apresentar as melhores soluções para o seu negócio.
+            {serviceType === 'prime_hub' 
+              ? 'Preencha o formulário para agendar sua consultoria estratégica exclusiva com nosso CEO.'
+              : 'Preencha o formulário abaixo e nossa equipe entrará em contato para apresentar as melhores soluções para o seu negócio.'}
           </DialogDescription>
         </DialogHeader>
 
