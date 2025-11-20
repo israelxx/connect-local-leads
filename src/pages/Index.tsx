@@ -15,22 +15,28 @@ import { LeadFormModal } from "@/components/LeadFormModal";
 
 const Index = () => {
   const [isFormOpen, setIsFormOpen] = useState(false);
+  const [serviceType, setServiceType] = useState<'standard' | 'prime_hub'>('standard');
+
+  const handleOpenForm = (type: 'standard' | 'prime_hub' = 'standard') => {
+    setServiceType(type);
+    setIsFormOpen(true);
+  };
 
   return (
     <div className="min-h-screen bg-background">
-      <Header onOpenForm={() => setIsFormOpen(true)} />
-      <Hero onOpenForm={() => setIsFormOpen(true)} />
+      <Header onOpenForm={() => handleOpenForm('standard')} />
+      <Hero onOpenForm={() => handleOpenForm('standard')} />
       <WhyProConnect />
       <Pillars />
       <Equipment />
       <CEO />
       <OurStructure />
       <Cases />
-      <PrimeHub onOpenForm={() => setIsFormOpen(true)} />
+      <PrimeHub onOpenForm={() => handleOpenForm('prime_hub')} />
       <Guarantee />
-      <Contact onOpenForm={() => setIsFormOpen(true)} />
+      <Contact onOpenForm={() => handleOpenForm('standard')} />
       <Footer />
-      <LeadFormModal open={isFormOpen} onOpenChange={setIsFormOpen} />
+      <LeadFormModal open={isFormOpen} onOpenChange={setIsFormOpen} serviceType={serviceType} />
     </div>
   );
 };

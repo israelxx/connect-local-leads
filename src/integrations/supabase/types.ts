@@ -25,6 +25,7 @@ export type Database = {
           phone: string
           revenue: string
           segment: string
+          service_type: string
         }
         Insert: {
           challenge: string
@@ -36,6 +37,7 @@ export type Database = {
           phone: string
           revenue?: string
           segment: string
+          service_type?: string
         }
         Update: {
           challenge?: string
@@ -47,6 +49,7 @@ export type Database = {
           phone?: string
           revenue?: string
           segment?: string
+          service_type?: string
         }
         Relationships: []
       }

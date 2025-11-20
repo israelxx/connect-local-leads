@@ -16,6 +16,7 @@ interface LeadEmailRequest {
   segment: string;
   challenge: string;
   revenue: string;
+  service_type: 'standard' | 'prime_hub';
 }
 
 const handler = async (req: Request): Promise<Response> => {
@@ -28,7 +29,7 @@ const handler = async (req: Request): Promise<Response> => {
 
   try {
     const leadData: LeadEmailRequest = await req.json();
-    console.log("Processing lead for:", leadData.email);
+    console.log("Processing lead for:", leadData.email, "Type:", leadData.service_type);
 
     // Send confirmation email to the lead using Resend API
     const confirmationEmailResponse = await fetch("https://api.resend.com/emails", {
@@ -40,7 +41,9 @@ const handler = async (req: Request): Promise<Response> => {
       body: JSON.stringify({
         from: "Pro Connect <onboarding@resend.dev>",
         to: [leadData.email],
-        subject: "Recebemos seu contato! | Pro Connect",
+        subject: leadData.service_type === 'prime_hub' 
+          ? "Sua Consultoria PRIME HUB foi agendada! | Pro Connect"
+          : "Recebemos seu contato! | Pro Connect",
         html: `
           <!DOCTYPE html>
           <html>
@@ -56,12 +59,17 @@ const handler = async (req: Request): Promise<Response> => {
             <body>
               <div class="container">
                 <div class="header">
-                  <h1>Obrigado pelo seu contato!</h1>
+                  <h1>${leadData.service_type === 'prime_hub' 
+                    ? '🎯 Consultoria PRIME HUB Agendada!'
+                    : 'Obrigado pelo seu contato!'}</h1>
                 </div>
                 <div class="content">
                   <p>Olá <strong>${leadData.name}</strong>,</p>
                   
-                  <p>Recebemos sua solicitação e estamos animados em conhecer mais sobre <strong>${leadData.company}</strong>!</p>
+                  <p>${leadData.service_type === 'prime_hub'
+                    ? `Recebemos sua solicitação para a <strong>Consultoria Estratégica PRIME HUB</strong>! Nossa equipe irá entrar em contato em breve para agendar sua sessão exclusiva com o CEO Fellipe de Sá.`
+                    : `Recebemos sua solicitação e estamos animados em conhecer mais sobre <strong>${leadData.company}</strong>!`}
+                  </p>
                   
                   <p>Nossa equipe de especialistas irá analisar seu desafio e entrar em contato em breve com as melhores soluções para o seu negócio.</p>
                   
@@ -103,7 +111,9 @@ const handler = async (req: Request): Promise<Response> => {
       body: JSON.stringify({
         from: "Pro Connect Leads <onboarding@resend.dev>",
         to: ["pro.conectt@gmail.com"],
-        subject: `Novo Lead: ${leadData.company}`,
+        subject: leadData.service_type === 'prime_hub'
+          ? `🌟 PRIME HUB: ${leadData.company}`
+          : `Novo Lead: ${leadData.company}`,
         html: `
           <!DOCTYPE html>
           <html>
@@ -120,10 +130,11 @@ const handler = async (req: Request): Promise<Response> => {
             <body>
               <div class="container">
                 <div class="header">
-                  <h2>🎯 Novo Lead Recebido!</h2>
+                  <h2>${leadData.service_type === 'prime_hub' ? '🌟 Novo Lead PRIME HUB!' : '🎯 Novo Lead Recebido!'}</h2>
                 </div>
                 <div class="content">
                   <div class="lead-info">
+                    <p><span class="label">Tipo de Serviço:</span> <strong style="color: ${leadData.service_type === 'prime_hub' ? '#0EA5E9' : '#666'};">${leadData.service_type === 'prime_hub' ? 'PRIME HUB - Consultoria Premium' : 'Serviço Padrão'}</strong></p>
                     <p><span class="label">Nome:</span> ${leadData.name}</p>
                     <p><span class="label">Empresa:</span> ${leadData.company}</p>
                     <p><span class="label">Email:</span> ${leadData.email}</p>
