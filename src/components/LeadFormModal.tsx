@@ -28,6 +28,7 @@ export const LeadFormModal = ({ open, onOpenChange }: LeadFormModalProps) => {
     email: "",
     segment: "",
     challenge: "",
+    revenue: "",
   });
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -81,6 +82,7 @@ export const LeadFormModal = ({ open, onOpenChange }: LeadFormModalProps) => {
         email: "",
         segment: "",
         challenge: "",
+        revenue: "",
       });
       onOpenChange(false);
     } catch (error) {
@@ -176,6 +178,18 @@ export const LeadFormModal = ({ open, onOpenChange }: LeadFormModalProps) => {
               onChange={handleChange}
               required
               placeholder="Qual o segmento do seu negócio?"
+            />
+          </div>
+
+          <div className="space-y-2">
+            <Label htmlFor="modal-revenue">Faturamento mensal *</Label>
+            <Input
+              id="modal-revenue"
+              name="revenue"
+              value={formData.revenue}
+              onChange={handleChange}
+              required
+              placeholder="Ex: R$ 50.000/mês"
             />
           </div>
 
