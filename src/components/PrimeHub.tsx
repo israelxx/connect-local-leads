@@ -71,11 +71,11 @@ export const PrimeHub = ({ onOpenForm }: PrimeHubProps) => {
                 <Button
                   onClick={onOpenForm}
                   size="lg"
-                  className="relative w-full bg-gradient-to-r from-primary to-accent hover:from-primary/90 hover:to-accent/90 text-primary-foreground px-8 py-8 text-xl font-bold rounded-xl shadow-2xl transition-all duration-300 hover:scale-105 border-2 border-primary/50"
+                  className="relative w-full bg-gradient-to-r from-primary to-accent hover:from-primary/90 hover:to-accent/90 text-primary-foreground px-6 md:px-8 py-6 md:py-8 text-base md:text-xl font-bold rounded-xl shadow-2xl transition-all duration-300 hover:scale-105 border-2 border-primary/50"
                 >
-                  <span className="flex flex-col items-center gap-2">
-                    <span>🚀 Agende sua Consultoria Estratégica</span>
-                    <span className="text-sm font-normal opacity-90">Vagas limitadas - Fale com nosso CEO</span>
+                  <span className="flex flex-col items-center gap-1 md:gap-2">
+                    <span className="text-center">🚀 Agende sua Consultoria Estratégica</span>
+                    <span className="text-xs md:text-sm font-normal opacity-90">Vagas limitadas - Fale com nosso CEO</span>
                   </span>
                 </Button>
               </div>
