@@ -1,4 +1,5 @@
 import { Camera, Wifi, Monitor, Mic } from "lucide-react";
+import equipmentShowcase from "@/assets/equipment-showcase.png";
 
 const equipment = [
   { name: "Sony FX30", category: "camera" },
@@ -49,6 +50,18 @@ export const Equipment = () => {
           <p className="text-xl text-muted-foreground">
             Por trás das estratégias, existe uma operação robusta pronta para qualquer demanda.
           </p>
+        </div>
+
+        {/* Showcase Image */}
+        <div className="max-w-6xl mx-auto mb-12 animate-fade-in">
+          <div className="relative rounded-2xl overflow-hidden border-2 border-primary/30 shadow-2xl group">
+            <div className="absolute inset-0 bg-gradient-to-br from-primary/10 via-transparent to-accent/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+            <img 
+              src={equipmentShowcase} 
+              alt="Estrutura Operacional ProConnect - Drones, Câmeras e Estúdio"
+              className="w-full h-auto object-cover group-hover:scale-[1.02] transition-transform duration-500"
+            />
+          </div>
         </div>
 
         {/* Equipment grid */}
