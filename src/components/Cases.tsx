@@ -1,4 +1,5 @@
-import { TrendingUp, DollarSign, Users } from "lucide-react";
+import { useState } from "react";
+import { TrendingUp, DollarSign, Users, X } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
 import case1 from "@/assets/case-1.png";
 import case2 from "@/assets/case-2.png";
@@ -39,7 +40,10 @@ const cases = [
   },
 ];
 
+
 export const Cases = () => {
+  const [zoomedImage, setZoomedImage] = useState<string | null>(null);
+
   return (
     <section className="py-24 bg-gradient-to-b from-background to-secondary relative overflow-hidden">
       {/* Decorative lines */}
@@ -70,11 +74,14 @@ export const Cases = () => {
               
               <CardContent className="p-0 relative z-10">
                 {/* Case Image - Agora em destaque principal */}
-                <div className="w-full aspect-square overflow-hidden bg-background">
+                <div 
+                  className="w-full aspect-square overflow-hidden bg-background cursor-pointer"
+                  onClick={() => setZoomedImage(item.image)}
+                >
                   <img 
                     src={item.image} 
                     alt={`Resultados do case`}
-                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+                    className="w-full h-full object-contain group-hover:scale-105 transition-transform duration-700"
                   />
                 </div>
 
@@ -97,6 +104,29 @@ export const Cases = () => {
             </Card>
           ))}
         </div>
+
+        {/* Lightbox Modal */}
+        {zoomedImage && (
+          <div 
+            className="fixed inset-0 z-50 bg-background/95 backdrop-blur-sm flex items-center justify-center p-4 animate-fade-in"
+            onClick={() => setZoomedImage(null)}
+          >
+            <button 
+              className="absolute top-4 right-4 w-10 h-10 rounded-full bg-primary/10 hover:bg-primary flex items-center justify-center transition-colors group"
+              onClick={() => setZoomedImage(null)}
+            >
+              <X className="w-6 h-6 text-primary group-hover:text-primary-foreground" />
+            </button>
+            <div className="max-w-6xl max-h-[90vh] w-full h-full flex items-center justify-center">
+              <img 
+                src={zoomedImage} 
+                alt="Resultado ampliado"
+                className="max-w-full max-h-full object-contain rounded-lg shadow-2xl"
+                onClick={(e) => e.stopPropagation()}
+              />
+            </div>
+          </div>
+        )}
       </div>
     </section>
   );
