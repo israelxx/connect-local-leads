@@ -40,7 +40,7 @@ export const WhyProConnect = () => {
             <div className="absolute inset-0 bg-gradient-to-r from-primary to-primary-glow rounded-2xl blur-xl opacity-30 group-hover:opacity-50 transition-opacity"></div>
             <div className="relative bg-card border border-border rounded-2xl p-8 text-center space-y-3">
               <Users className="w-12 h-12 text-primary mx-auto" />
-              <div className="text-4xl font-bold text-primary">500+</div>
+              <div className="text-4xl font-bold text-primary">100+</div>
               <div className="text-muted-foreground">Projetos Entregues</div>
             </div>
           </div>
@@ -49,7 +49,7 @@ export const WhyProConnect = () => {
             <div className="absolute inset-0 bg-gradient-to-r from-primary to-primary-glow rounded-2xl blur-xl opacity-30 group-hover:opacity-50 transition-opacity"></div>
             <div className="relative bg-card border border-border rounded-2xl p-8 text-center space-y-3">
               <TrendingUp className="w-12 h-12 text-primary mx-auto" />
-              <div className="text-4xl font-bold text-primary">10+</div>
+              <div className="text-4xl font-bold text-primary">5+</div>
               <div className="text-muted-foreground">Anos de Experiência</div>
             </div>
           </div>
