@@ -15,6 +15,7 @@ interface LeadEmailRequest {
   email: string;
   segment: string;
   challenge: string;
+  revenue: string;
 }
 
 const handler = async (req: Request): Promise<Response> => {
@@ -68,6 +69,7 @@ const handler = async (req: Request): Promise<Response> => {
                   <ul>
                     <li><strong>Empresa:</strong> ${leadData.company}</li>
                     <li><strong>Segmento:</strong> ${leadData.segment}</li>
+                    <li><strong>Faturamento:</strong> ${leadData.revenue}</li>
                     <li><strong>Telefone:</strong> ${leadData.phone}</li>
                   </ul>
                   
@@ -127,6 +129,7 @@ const handler = async (req: Request): Promise<Response> => {
                     <p><span class="label">Email:</span> ${leadData.email}</p>
                     <p><span class="label">Telefone:</span> ${leadData.phone}</p>
                     <p><span class="label">Segmento:</span> ${leadData.segment}</p>
+                    <p><span class="label">Faturamento mensal:</span> ${leadData.revenue}</p>
                     <p><span class="label">Principal desafio:</span></p>
                     <p style="background: #f5f5f5; padding: 15px; border-radius: 6px;">${leadData.challenge}</p>
                   </div>
