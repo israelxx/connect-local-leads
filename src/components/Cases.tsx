@@ -8,35 +8,30 @@ import caseAndrei from "@/assets/case-andrei.png";
 
 const cases = [
   {
-    name: "Porão Burger",
     metric: "+150%",
     description: "Crescimento em vendas",
     icon: TrendingUp,
     image: case4,
   },
   {
-    name: "FrutValle",
     metric: "+200%",
     description: "Aumento em leads qualificados",
     icon: Users,
     image: case1,
   },
   {
-    name: "Pedacinho do Céu",
     metric: "+180%",
     description: "ROI em campanhas",
     icon: DollarSign,
     image: case3,
   },
   {
-    name: "Bruna Braga",
     metric: "+250%",
     description: "Aumento em leads qualificados de alto padrão",
     icon: Users,
     image: case2,
   },
   {
-    name: "Andrei Gonçalves",
     metric: "+170%",
     description: "Crescimento em engajamento e seguidores",
     icon: Users,
@@ -73,34 +68,30 @@ export const Cases = () => {
               {/* Gradient overlay */}
               <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-accent/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
               
-              <CardContent className="p-6 space-y-6 relative z-10">
-                <div className="flex items-center justify-between">
-                  <div className="w-14 h-14 rounded-full bg-primary/10 flex items-center justify-center group-hover:bg-primary group-hover:scale-110 transition-all duration-500">
-                    <item.icon className="w-7 h-7 text-primary group-hover:text-primary-foreground transition-colors" />
-                  </div>
-                  <div className="text-right">
-                    <div className="text-3xl font-bold bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
+              <CardContent className="p-0 relative z-10">
+                {/* Case Image - Agora em destaque principal */}
+                <div className="w-full aspect-square overflow-hidden bg-background">
+                  <img 
+                    src={item.image} 
+                    alt={`Resultados do case`}
+                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+                  />
+                </div>
+
+                {/* Metrics overlay */}
+                <div className="p-6 space-y-4">
+                  <div className="flex items-center justify-between">
+                    <div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center group-hover:bg-primary group-hover:scale-110 transition-all duration-500">
+                      <item.icon className="w-6 h-6 text-primary group-hover:text-primary-foreground transition-colors" />
+                    </div>
+                    <div className="text-4xl font-bold bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
                       {item.metric}
                     </div>
                   </div>
-                </div>
-                
-                <div className="space-y-2">
-                  <h3 className="text-xl font-bold text-foreground">
-                    {item.name}
-                  </h3>
-                  <p className="text-sm text-muted-foreground">
+                  
+                  <p className="text-base text-muted-foreground leading-relaxed">
                     {item.description}
                   </p>
-                </div>
-
-                {/* Case Image - Maior e mais visível */}
-                <div className="mt-4 rounded-xl overflow-hidden border-2 border-primary/20 shadow-xl bg-background">
-                  <img 
-                    src={item.image} 
-                    alt={`Resultados ${item.name}`}
-                    className="w-full h-auto object-contain group-hover:scale-[1.02] transition-transform duration-500"
-                  />
                 </div>
               </CardContent>
             </Card>
