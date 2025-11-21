@@ -172,6 +172,8 @@ export default function Dashboard() {
                     <th className="text-left p-3 text-sm font-medium text-muted-foreground">Tipo</th>
                     <th className="text-left p-3 text-sm font-medium text-muted-foreground">Nome</th>
                     <th className="text-left p-3 text-sm font-medium text-muted-foreground">Empresa</th>
+                    <th className="text-left p-3 text-sm font-medium text-muted-foreground">Contato</th>
+                    <th className="text-left p-3 text-sm font-medium text-muted-foreground">Email</th>
                     <th className="text-left p-3 text-sm font-medium text-muted-foreground">Segmento</th>
                     <th className="text-left p-3 text-sm font-medium text-muted-foreground">Faturamento</th>
                     <th className="text-left p-3 text-sm font-medium text-muted-foreground">Data</th>
@@ -191,6 +193,8 @@ export default function Dashboard() {
                       </td>
                       <td className="p-3 text-sm text-foreground">{lead.name}</td>
                       <td className="p-3 text-sm text-foreground">{lead.company}</td>
+                      <td className="p-3 text-sm text-foreground">{lead.phone}</td>
+                      <td className="p-3 text-sm text-foreground">{lead.email}</td>
                       <td className="p-3 text-sm text-muted-foreground">{lead.segment}</td>
                       <td className="p-3 text-sm text-foreground font-medium">{lead.revenue}</td>
                       <td className="p-3 text-sm text-muted-foreground">
