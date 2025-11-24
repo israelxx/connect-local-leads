@@ -14,6 +14,33 @@ export type Database = {
   }
   public: {
     Tables: {
+      form_submissions: {
+        Row: {
+          created_at: string | null
+          form_type: string | null
+          id: string
+          ip_address: string
+          submitted_at: string
+          user_agent: string | null
+        }
+        Insert: {
+          created_at?: string | null
+          form_type?: string | null
+          id?: string
+          ip_address: string
+          submitted_at?: string
+          user_agent?: string | null
+        }
+        Update: {
+          created_at?: string | null
+          form_type?: string | null
+          id?: string
+          ip_address?: string
+          submitted_at?: string
+          user_agent?: string | null
+        }
+        Relationships: []
+      }
       leads: {
         Row: {
           challenge: string
@@ -79,6 +106,7 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
+      cleanup_old_submissions: { Args: never; Returns: undefined }
       has_role: {
         Args: {
           _role: Database["public"]["Enums"]["app_role"]
