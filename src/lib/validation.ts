@@ -64,6 +64,11 @@ export const leadFormSchema = z.object({
       errorMap: () => ({ message: "Tipo de serviço inválido" }),
     })
     .default("standard"),
+  
+  recaptchaToken: z
+    .string()
+    .min(1, "Token de segurança obrigatório")
+    .optional(),
 });
 
 export type LeadFormData = z.infer<typeof leadFormSchema>;

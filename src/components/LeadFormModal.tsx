@@ -42,10 +42,31 @@ export const LeadFormModal = ({ open, onOpenChange, serviceType = 'standard' }: 
     setIsSubmitting(true);
     
     try {
+      // Get reCAPTCHA token
+      const siteKey = import.meta.env.VITE_RECAPTCHA_SITE_KEY;
+      
+      if (!siteKey) {
+        throw new Error("reCAPTCHA não configurado");
+      }
+
+      // Wait for grecaptcha to be ready
+      if (typeof window.grecaptcha === 'undefined') {
+        throw new Error("reCAPTCHA ainda não carregou. Por favor, aguarde e tente novamente.");
+      }
+
+      const recaptchaToken = await new Promise<string>((resolve, reject) => {
+        window.grecaptcha.ready(() => {
+          window.grecaptcha.execute(siteKey, { action: 'submit' })
+            .then(resolve)
+            .catch(reject);
+        });
+      });
+
       // Validate form data with zod schema
       const validatedData = leadFormSchema.parse({
         ...formData,
         service_type: serviceType,
+        recaptchaToken,
       });
 
       // Save lead to database - zod already validated and transformed the data
@@ -77,15 +98,42 @@ export const LeadFormModal = ({ open, onOpenChange, serviceType = 'standard' }: 
 
       if (emailError) {
         console.error("Email error:", emailError);
-        // Continue anyway, as the lead was saved
+        
+        // Handle specific error codes
+        const errorData = emailError as any;
+        
+        if (errorData.context?.status === 429) {
+          toast({
+            title: "Limite de envios excedido",
+            description: "Você pode enviar no máximo 5 formulários por hora. Por favor, tente novamente mais tarde.",
+            variant: "destructive",
+          });
+          return;
+        }
+        
+        if (errorData.context?.status === 403) {
+          toast({
+            title: "Verificação de segurança falhou",
+            description: "Por favor, recarregue a página e tente novamente.",
+            variant: "destructive",
+          });
+          return;
+        }
+        
+        // For other errors, show generic message but continue since lead was saved
+        toast({
+          title: "Aviso",
+          description: "Seu lead foi salvo, mas houve um problema ao enviar o email. Entraremos em contato em breve.",
+        });
+      } else {
+        // Only show success if no email error
+        toast({
+          title: "Sucesso! 🎉",
+          description: "Um especialista entrará em contato em breve.",
+        });
       }
 
-      toast({
-        title: "Sucesso! 🎉",
-        description: "Um especialista entrará em contato em breve.",
-      });
-
-      // Reset form and close modal
+      // Reset form and close modal (only if not rate limited or CAPTCHA failed)
       setFormData({
         name: "",
         company: "",
@@ -112,6 +160,22 @@ export const LeadFormModal = ({ open, onOpenChange, serviceType = 'standard' }: 
           description: "Por favor, corrija os erros no formulário.",
           variant: "destructive",
         });
+      } else if (error instanceof Error) {
+        // Handle specific error types
+        if (error.message.includes("reCAPTCHA")) {
+          toast({
+            title: "Erro de segurança",
+            description: error.message,
+            variant: "destructive",
+          });
+        } else {
+          console.error("Submit error:", error);
+          toast({
+            title: "Erro ao enviar",
+            description: error.message || "Tente novamente ou entre em contato diretamente.",
+            variant: "destructive",
+          });
+        }
       } else {
         console.error("Submit error:", error);
         toast({
@@ -296,6 +360,28 @@ export const LeadFormModal = ({ open, onOpenChange, serviceType = 'standard' }: 
             {isSubmitting ? "Enviando..." : "Enviar para um especialista"}
             <Send className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform" />
           </Button>
+          
+          <p className="text-xs text-muted-foreground text-center mt-4">
+            Este site é protegido pelo reCAPTCHA e aplicam-se a{" "}
+            <a 
+              href="https://policies.google.com/privacy" 
+              target="_blank" 
+              rel="noopener noreferrer"
+              className="underline hover:text-foreground"
+            >
+              Política de Privacidade
+            </a>
+            {" "}e os{" "}
+            <a 
+              href="https://policies.google.com/terms" 
+              target="_blank" 
+              rel="noopener noreferrer"
+              className="underline hover:text-foreground"
+            >
+              Termos de Serviço
+            </a>
+            {" "}do Google.
+          </p>
         </form>
       </DialogContent>
     </Dialog>
