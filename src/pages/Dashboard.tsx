@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { BarChart, Users, TrendingUp, DollarSign, LogOut, ShieldAlert } from "lucide-react";
+import { BarChart, Users, TrendingUp, DollarSign, LogOut, ShieldAlert, UserCog } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { checkUserRole } from "@/lib/roles";
 
@@ -150,10 +150,16 @@ export default function Dashboard() {
             <h1 className="text-4xl font-bold text-foreground">Dashboard Pro Connect</h1>
             <p className="text-muted-foreground mt-2">Estatísticas de Leads</p>
           </div>
-          <Button onClick={handleLogout} variant="outline">
-            <LogOut className="w-4 h-4 mr-2" />
-            Sair
-          </Button>
+          <div className="flex gap-3">
+            <Button onClick={() => navigate("/users")} variant="outline">
+              <UserCog className="w-4 h-4 mr-2" />
+              Gerenciar Usuários
+            </Button>
+            <Button onClick={handleLogout} variant="outline">
+              <LogOut className="w-4 h-4 mr-2" />
+              Sair
+            </Button>
+          </div>
         </div>
 
         {/* Stats Cards */}
