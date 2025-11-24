@@ -3,8 +3,9 @@ import { useNavigate } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { BarChart, Users, TrendingUp, DollarSign, LogOut } from "lucide-react";
+import { BarChart, Users, TrendingUp, DollarSign, LogOut, ShieldAlert } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
+import { checkUserRole } from "@/lib/roles";
 
 interface LeadStats {
   total: number;
@@ -27,17 +28,36 @@ export default function Dashboard() {
     recentLeads: [],
   });
   const [loading, setLoading] = useState(true);
+  const [isAdmin, setIsAdmin] = useState(false);
+  const [checkingAuth, setCheckingAuth] = useState(true);
 
   useEffect(() => {
     checkAuth();
-    fetchStats();
   }, []);
 
   const checkAuth = async () => {
     const { data: { session } } = await supabase.auth.getSession();
     if (!session) {
       navigate("/login");
+      return;
     }
+
+    // Check if user has admin role
+    const hasAdminRole = await checkUserRole('admin');
+    setIsAdmin(hasAdminRole);
+    setCheckingAuth(false);
+
+    if (!hasAdminRole) {
+      toast({
+        title: "Acesso Negado",
+        description: "Você não tem permissão para acessar o dashboard.",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    // Only fetch stats if user is admin
+    fetchStats();
   };
 
   const fetchStats = async () => {
@@ -77,13 +97,41 @@ export default function Dashboard() {
     navigate("/login");
   };
 
-  if (loading) {
+  if (checkingAuth || loading) {
     return (
       <div className="min-h-screen bg-background flex items-center justify-center">
         <div className="text-center">
           <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary mx-auto"></div>
-          <p className="mt-4 text-muted-foreground">Carregando...</p>
+          <p className="mt-4 text-muted-foreground">
+            {checkingAuth ? "Verificando permissões..." : "Carregando..."}
+          </p>
         </div>
+      </div>
+    );
+  }
+
+  // Show access denied if not admin
+  if (!isAdmin) {
+    return (
+      <div className="min-h-screen bg-background flex items-center justify-center">
+        <Card className="w-full max-w-md border-border">
+          <CardHeader className="text-center">
+            <ShieldAlert className="w-16 h-16 mx-auto mb-4 text-destructive" />
+            <CardTitle className="text-2xl">Acesso Negado</CardTitle>
+          </CardHeader>
+          <CardContent className="text-center space-y-4">
+            <p className="text-muted-foreground">
+              Você não tem permissão de administrador para acessar o dashboard.
+            </p>
+            <p className="text-sm text-muted-foreground">
+              Entre em contato com o administrador do sistema para solicitar acesso.
+            </p>
+            <Button onClick={handleLogout} variant="outline" className="w-full">
+              <LogOut className="mr-2 h-4 w-4" />
+              Sair
+            </Button>
+          </CardContent>
+        </Card>
       </div>
     );
   }
