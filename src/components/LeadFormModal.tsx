@@ -84,7 +84,9 @@ export const LeadFormModal = ({ open, onOpenChange, serviceType = 'standard' }: 
         }]);
 
       if (dbError) {
-        console.error("Database error:", dbError);
+        if (import.meta.env.DEV) {
+          console.error("Database error:", dbError);
+        }
         throw new Error("Erro ao salvar os dados");
       }
 
@@ -97,7 +99,9 @@ export const LeadFormModal = ({ open, onOpenChange, serviceType = 'standard' }: 
       );
 
       if (emailError) {
-        console.error("Email error:", emailError);
+        if (import.meta.env.DEV) {
+          console.error("Email error:", emailError);
+        }
         
         // Handle specific error codes
         const errorData = emailError as any;
@@ -169,7 +173,9 @@ export const LeadFormModal = ({ open, onOpenChange, serviceType = 'standard' }: 
             variant: "destructive",
           });
         } else {
-          console.error("Submit error:", error);
+          if (import.meta.env.DEV) {
+            console.error("Submit error:", error);
+          }
           toast({
             title: "Erro ao enviar",
             description: error.message || "Tente novamente ou entre em contato diretamente.",
@@ -177,7 +183,9 @@ export const LeadFormModal = ({ open, onOpenChange, serviceType = 'standard' }: 
           });
         }
       } else {
-        console.error("Submit error:", error);
+        if (import.meta.env.DEV) {
+          console.error("Submit error:", error);
+        }
         toast({
           title: "Erro ao enviar",
           description: "Tente novamente ou entre em contato diretamente.",

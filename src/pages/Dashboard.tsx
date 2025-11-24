@@ -81,7 +81,9 @@ export default function Dashboard() {
         recentLeads: leads?.slice(0, 10) || [],
       });
     } catch (error) {
-      console.error("Error fetching stats:", error);
+      if (import.meta.env.DEV) {
+        console.error("Error fetching stats:", error);
+      }
       toast({
         title: "Erro",
         description: "Não foi possível carregar as estatísticas",
