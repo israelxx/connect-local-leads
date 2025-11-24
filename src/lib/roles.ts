@@ -19,13 +19,17 @@ export async function checkUserRole(role: AppRole): Promise<boolean> {
       .maybeSingle();
 
     if (error) {
-      console.error('Error checking user role:', error);
+      if (import.meta.env.DEV) {
+        console.error('Error checking user role:', error);
+      }
       return false;
     }
 
     return !!data;
   } catch (error) {
-    console.error('Error in checkUserRole:', error);
+    if (import.meta.env.DEV) {
+      console.error('Error in checkUserRole:', error);
+    }
     return false;
   }
 }
@@ -45,13 +49,17 @@ export async function getUserRoles(): Promise<AppRole[]> {
       .eq('user_id', user.id);
 
     if (error) {
-      console.error('Error fetching user roles:', error);
+      if (import.meta.env.DEV) {
+        console.error('Error fetching user roles:', error);
+      }
       return [];
     }
 
     return (data || []).map(row => row.role as AppRole);
   } catch (error) {
-    console.error('Error in getUserRoles:', error);
+    if (import.meta.env.DEV) {
+      console.error('Error in getUserRoles:', error);
+    }
     return [];
   }
 }
