@@ -60,6 +60,8 @@ export const Equipment = () => {
               src={equipmentShowcase} 
               alt="Estrutura Operacional ProConnect - Drones, Câmeras e Estúdio"
               className="w-full h-auto object-cover group-hover:scale-[1.02] transition-transform duration-500"
+              loading="lazy"
+              decoding="async"
             />
           </div>
         </div>
