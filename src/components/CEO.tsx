@@ -28,6 +28,8 @@ export const CEO = () => {
                     src={ceoPhoto}
                     alt="Fellipe de Sá - CEO Pro Connect"
                     className="relative rounded-2xl shadow-2xl w-full border border-border"
+                    loading="lazy"
+                    decoding="async"
                   />
                   {/* Name badge overlay */}
                   <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-background/90 to-transparent p-6 rounded-b-2xl">

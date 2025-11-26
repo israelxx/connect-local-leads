@@ -82,6 +82,8 @@ export const Cases = () => {
                     src={item.image} 
                     alt={`Resultados do case`}
                     className="w-full h-full object-contain group-hover:scale-105 transition-transform duration-700"
+                    loading="lazy"
+                    decoding="async"
                   />
                 </div>
 
