@@ -1,17 +1,19 @@
-import { useState } from "react";
+import { useState, lazy, Suspense } from "react";
 import { Header } from "@/components/Header";
 import { Hero } from "@/components/Hero";
-import { WhyProConnect } from "@/components/WhyProConnect";
-import { Pillars } from "@/components/Pillars";
-import { Equipment } from "@/components/Equipment";
-import { CEO } from "@/components/CEO";
-import { OurStructure } from "@/components/OurStructure";
-import { Cases } from "@/components/Cases";
-import { PrimeHub } from "@/components/PrimeHub";
-import { Guarantee } from "@/components/Guarantee";
-import { Contact } from "@/components/Contact";
-import { Footer } from "@/components/Footer";
 import { LeadFormModal } from "@/components/LeadFormModal";
+
+// Lazy load components below the fold for faster initial load
+const WhyProConnect = lazy(() => import("@/components/WhyProConnect").then(m => ({ default: m.WhyProConnect })));
+const Pillars = lazy(() => import("@/components/Pillars").then(m => ({ default: m.Pillars })));
+const Equipment = lazy(() => import("@/components/Equipment").then(m => ({ default: m.Equipment })));
+const CEO = lazy(() => import("@/components/CEO").then(m => ({ default: m.CEO })));
+const OurStructure = lazy(() => import("@/components/OurStructure").then(m => ({ default: m.OurStructure })));
+const Cases = lazy(() => import("@/components/Cases").then(m => ({ default: m.Cases })));
+const PrimeHub = lazy(() => import("@/components/PrimeHub").then(m => ({ default: m.PrimeHub })));
+const Guarantee = lazy(() => import("@/components/Guarantee").then(m => ({ default: m.Guarantee })));
+const Contact = lazy(() => import("@/components/Contact").then(m => ({ default: m.Contact })));
+const Footer = lazy(() => import("@/components/Footer").then(m => ({ default: m.Footer })));
 
 const Index = () => {
   const [isFormOpen, setIsFormOpen] = useState(false);
@@ -26,16 +28,18 @@ const Index = () => {
     <div className="min-h-screen bg-background">
       <Header onOpenForm={() => handleOpenForm('standard')} />
       <Hero onOpenForm={() => handleOpenForm('standard')} />
-      <WhyProConnect />
-      <Pillars />
-      <Equipment />
-      <CEO />
-      <OurStructure />
-      <Cases />
-      <PrimeHub onOpenForm={() => handleOpenForm('prime_hub')} />
-      <Guarantee />
-      <Contact onOpenForm={() => handleOpenForm('standard')} />
-      <Footer />
+      <Suspense fallback={<div className="min-h-[50vh]" />}>
+        <WhyProConnect />
+        <Pillars />
+        <Equipment />
+        <CEO />
+        <OurStructure />
+        <Cases />
+        <PrimeHub onOpenForm={() => handleOpenForm('prime_hub')} />
+        <Guarantee />
+        <Contact onOpenForm={() => handleOpenForm('standard')} />
+        <Footer />
+      </Suspense>
       <LeadFormModal open={isFormOpen} onOpenChange={setIsFormOpen} serviceType={serviceType} />
     </div>
   );
