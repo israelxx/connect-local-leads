@@ -65,6 +65,14 @@ const leadFormSchema = z.object({
     .trim()
     .max(50, "Faturamento deve ter no máximo 50 caracteres"),
   
+  social_handle: z
+    .string()
+    .trim()
+    .min(1, "@ da empresa é obrigatório")
+    .max(100, "@ deve ter no máximo 100 caracteres")
+    .regex(/^@?[\w\-.]+$/, "Formato inválido. Use apenas letras, números, pontos, hífens ou underline")
+    .transform((val: string) => val.startsWith('@') ? val : `@${val}`),
+  
   service_type: z
     .enum(["standard", "prime_hub"])
     .default("standard"),
@@ -277,6 +285,7 @@ const handler = async (req: Request): Promise<Response> => {
     const safeSegment = escapeHtml(validatedData.segment);
     const safeChallenge = escapeHtml(validatedData.challenge);
     const safeRevenue = escapeHtml(validatedData.revenue);
+    const safeSocialHandle = escapeHtml(validatedData.social_handle);
     const serviceLabel = validatedData.service_type === "prime_hub" ? "PRIME HUB" : "Padrão";
 
     // Send confirmation email to the lead using Resend API
@@ -324,6 +333,7 @@ const handler = async (req: Request): Promise<Response> => {
                   <p><strong>Resumo da sua solicitação:</strong></p>
                   <ul>
                     <li><strong>Empresa:</strong> ${safeCompany}</li>
+                    <li><strong>@ da empresa:</strong> ${safeSocialHandle}</li>
                     <li><strong>Segmento:</strong> ${safeSegment}</li>
                     <li><strong>Faturamento:</strong> ${safeRevenue}</li>
                     <li><strong>Telefone:</strong> ${safePhone}</li>
@@ -386,6 +396,7 @@ const handler = async (req: Request): Promise<Response> => {
                     <p><span class="label">Tipo de Serviço:</span> <strong style="color: ${validatedData.service_type === 'prime_hub' ? '#0EA5E9' : '#666'};">${serviceLabel}</strong></p>
                     <p><span class="label">Nome:</span> ${safeName}</p>
                     <p><span class="label">Empresa:</span> ${safeCompany}</p>
+                    <p><span class="label">@ da empresa:</span> ${safeSocialHandle}</p>
                     <p><span class="label">Email:</span> ${safeEmail}</p>
                     <p><span class="label">Telefone:</span> ${safePhone}</p>
                     <p><span class="label">Segmento:</span> ${safeSegment}</p>

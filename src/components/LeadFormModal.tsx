@@ -32,6 +32,7 @@ export const LeadFormModal = ({ open, onOpenChange, serviceType = 'standard' }: 
     segment: "",
     challenge: "",
     revenue: "",
+    social_handle: "",
   });
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -80,6 +81,7 @@ export const LeadFormModal = ({ open, onOpenChange, serviceType = 'standard' }: 
           segment: validatedData.segment,
           challenge: validatedData.challenge,
           revenue: validatedData.revenue,
+          social_handle: validatedData.social_handle,
           service_type: validatedData.service_type,
         }]);
 
@@ -146,6 +148,7 @@ export const LeadFormModal = ({ open, onOpenChange, serviceType = 'standard' }: 
         segment: "",
         challenge: "",
         revenue: "",
+        social_handle: "",
       });
       setErrors({});
       onOpenChange(false);
@@ -335,6 +338,25 @@ export const LeadFormModal = ({ open, onOpenChange, serviceType = 'standard' }: 
               <p className="text-sm text-destructive flex items-center gap-1">
                 <AlertCircle className="w-4 h-4" />
                 {errors.revenue}
+              </p>
+            )}
+          </div>
+
+          <div className="space-y-2">
+            <Label htmlFor="modal-social-handle">@ da empresa *</Label>
+            <Input
+              id="modal-social-handle"
+              name="social_handle"
+              value={formData.social_handle}
+              onChange={handleChange}
+              required
+              placeholder="@suaempresa"
+              className={errors.social_handle ? "border-destructive" : ""}
+            />
+            {errors.social_handle && (
+              <p className="text-sm text-destructive flex items-center gap-1">
+                <AlertCircle className="w-4 h-4" />
+                {errors.social_handle}
               </p>
             )}
           </div>
