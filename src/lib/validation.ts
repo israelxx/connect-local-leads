@@ -59,6 +59,15 @@ export const leadFormSchema = z.object({
     .max(50, "Faturamento deve ter no máximo 50 caracteres")
     .transform(sanitizeString),
   
+  social_handle: z
+    .string()
+    .trim()
+    .min(1, "@ da empresa é obrigatório")
+    .max(100, "@ deve ter no máximo 100 caracteres")
+    .regex(/^@?[\w\-.]+$/, "Formato inválido. Use apenas letras, números, pontos, hífens ou underline")
+    .transform((val) => val.startsWith('@') ? val : `@${val}`)
+    .transform(sanitizeString),
+  
   service_type: z
     .enum(["standard", "prime_hub"], {
       errorMap: () => ({ message: "Tipo de serviço inválido" }),
