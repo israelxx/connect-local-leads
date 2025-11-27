@@ -43,25 +43,24 @@ export const LeadFormModal = ({ open, onOpenChange, serviceType = 'standard' }: 
     setIsSubmitting(true);
     
     try {
-      // Get reCAPTCHA token
+      // Get reCAPTCHA token (optional - form works without it)
+      let recaptchaToken = '';
       const siteKey = import.meta.env.VITE_RECAPTCHA_SITE_KEY;
       
-      if (!siteKey) {
-        throw new Error("reCAPTCHA não configurado");
+      if (siteKey && typeof window.grecaptcha !== 'undefined') {
+        try {
+          recaptchaToken = await new Promise<string>((resolve, reject) => {
+            window.grecaptcha.ready(() => {
+              window.grecaptcha.execute(siteKey, { action: 'submit' })
+                .then(resolve)
+                .catch(reject);
+            });
+          });
+        } catch (recaptchaError) {
+          // Continue without reCAPTCHA if it fails
+          console.warn('reCAPTCHA failed, continuing without it');
+        }
       }
-
-      // Wait for grecaptcha to be ready
-      if (typeof window.grecaptcha === 'undefined') {
-        throw new Error("reCAPTCHA ainda não carregou. Por favor, aguarde e tente novamente.");
-      }
-
-      const recaptchaToken = await new Promise<string>((resolve, reject) => {
-        window.grecaptcha.ready(() => {
-          window.grecaptcha.execute(siteKey, { action: 'submit' })
-            .then(resolve)
-            .catch(reject);
-        });
-      });
 
       // Validate form data with zod schema
       const validatedData = leadFormSchema.parse({

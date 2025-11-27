@@ -76,7 +76,7 @@ export const leadFormSchema = z.object({
   
   recaptchaToken: z
     .string()
-    .min(1, "Token de segurança obrigatório"),
+    .optional(),
 });
 
 export type LeadFormData = z.infer<typeof leadFormSchema>;
