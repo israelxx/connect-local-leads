@@ -79,7 +79,7 @@ const leadFormSchema = z.object({
   
   recaptchaToken: z
     .string()
-    .min(1, "Token reCAPTCHA obrigatório"),
+    .optional(),
 });
 
 // HTML escape function to prevent XSS in emails
@@ -227,26 +227,20 @@ const handler = async (req: Request): Promise<Response> => {
     const validatedData = leadFormSchema.parse(body);
     console.log("Lead data validated successfully for:", validatedData.email);
 
-    // Verify reCAPTCHA token
-    console.log("Verifying reCAPTCHA token...");
-    const recaptchaResult = await verifyRecaptcha(validatedData.recaptchaToken, "submit");
-    
-    if (!recaptchaResult.success) {
-      console.error("reCAPTCHA verification failed:", recaptchaResult.error);
-      return new Response(
-        JSON.stringify({ 
-          error: "Verificação de segurança falhou",
-          details: "Por favor, recarregue a página e tente novamente.",
-          code: "RECAPTCHA_FAILED"
-        }),
-        {
-          status: 403,
-          headers: { "Content-Type": "application/json", ...corsHeaders },
-        }
-      );
+    // Verify reCAPTCHA token (optional - skip if not provided or not configured)
+    if (validatedData.recaptchaToken && RECAPTCHA_SECRET_KEY) {
+      console.log("Verifying reCAPTCHA token...");
+      const recaptchaResult = await verifyRecaptcha(validatedData.recaptchaToken, "submit");
+      
+      if (!recaptchaResult.success) {
+        console.warn("reCAPTCHA verification failed, but continuing:", recaptchaResult.error);
+        // Continue without blocking - reCAPTCHA failure shouldn't block form submission
+      } else {
+        console.log("reCAPTCHA verified successfully. Score:", recaptchaResult.score);
+      }
+    } else {
+      console.log("Skipping reCAPTCHA verification - token or secret not provided");
     }
-    
-    console.log("reCAPTCHA verified successfully. Score:", recaptchaResult.score);
 
     // Check rate limit
     console.log("Checking rate limit...");
