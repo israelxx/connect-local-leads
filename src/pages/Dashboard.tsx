@@ -60,21 +60,21 @@ export default function Dashboard() {
   const recentLeads = leads.filter((l) => new Date(l.created_at) >= thirtyDaysAgo).length;
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-4 sm:space-y-6">
       <div>
-        <h1 className="text-3xl font-bold">Dashboard</h1>
-        <p className="text-muted-foreground mt-1">Visão geral do CRM Pro Connect</p>
+        <h1 className="text-2xl sm:text-3xl font-bold">Dashboard</h1>
+        <p className="text-sm text-muted-foreground mt-1">Visão geral do CRM Pro Connect</p>
       </div>
 
       {/* Stats Cards */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+      <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
         <Card>
           <CardHeader className="flex flex-row items-center justify-between pb-2">
             <CardTitle className="text-sm font-medium">Total de Leads</CardTitle>
             <Users className="h-4 w-4 text-primary" />
           </CardHeader>
           <CardContent>
-            <div className="text-3xl font-bold">{totalLeads}</div>
+            <div className="text-2xl sm:text-3xl font-bold">{totalLeads}</div>
             <p className="text-xs text-muted-foreground mt-1">{recentLeads} nos últimos 30 dias</p>
           </CardContent>
         </Card>
@@ -85,7 +85,7 @@ export default function Dashboard() {
             <TrendingUp className="h-4 w-4 text-success" />
           </CardHeader>
           <CardContent>
-            <div className="text-3xl font-bold text-success">{closedLeads}</div>
+            <div className="text-2xl sm:text-3xl font-bold text-success">{closedLeads}</div>
             <p className="text-xs text-muted-foreground mt-1">De {activeLeads} leads ativos</p>
           </CardContent>
         </Card>
@@ -96,7 +96,7 @@ export default function Dashboard() {
             <Target className="h-4 w-4 text-accent" />
           </CardHeader>
           <CardContent>
-            <div className="text-3xl font-bold text-accent">{conversionRate}%</div>
+            <div className="text-2xl sm:text-3xl font-bold text-accent">{conversionRate}%</div>
             <p className="text-xs text-muted-foreground mt-1">Fechados / Ativos</p>
           </CardContent>
         </Card>
@@ -107,7 +107,7 @@ export default function Dashboard() {
             <BarChart className="h-4 w-4 text-primary" />
           </CardHeader>
           <CardContent>
-            <div className="text-3xl font-bold">{primeHubLeads}</div>
+            <div className="text-2xl sm:text-3xl font-bold">{primeHubLeads}</div>
             <p className="text-xs text-muted-foreground mt-1">
               {totalLeads > 0 ? ((primeHubLeads / totalLeads) * 100).toFixed(1) : 0}% do total
             </p>
@@ -121,7 +121,7 @@ export default function Dashboard() {
           <CardTitle>Pipeline de Leads</CardTitle>
         </CardHeader>
         <CardContent>
-          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-3">
+          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-2 sm:gap-3">
             {statusCounts.map((s) => {
               const config = getStatusConfig(s.value);
               return (

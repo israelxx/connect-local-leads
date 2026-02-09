@@ -208,13 +208,13 @@ export default function Agenda() {
     : [];
 
   return (
-    <div className="space-y-6">
-      <div className="flex items-center justify-between">
+    <div className="space-y-4 sm:space-y-6">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
         <div>
-          <h1 className="text-3xl font-bold">Agenda</h1>
-          <p className="text-muted-foreground">Gerencie suas reuniões</p>
+          <h1 className="text-2xl sm:text-3xl font-bold">Agenda</h1>
+          <p className="text-sm text-muted-foreground">Gerencie suas reuniões</p>
         </div>
-        <Button onClick={() => openNewMeeting()}>
+        <Button onClick={() => openNewMeeting()} size="sm" className="w-full sm:w-auto">
           <Plus className="mr-2 h-4 w-4" /> Nova Reunião
         </Button>
       </div>
@@ -253,7 +253,7 @@ export default function Agenda() {
                     onClick={() => setSelectedDate(day)}
                     onDoubleClick={() => openNewMeeting(day)}
                     className={cn(
-                      "relative min-h-[80px] p-1 text-left border border-border/50 rounded-md transition-colors",
+                      "relative min-h-[56px] sm:min-h-[80px] p-1 text-left border border-border/50 rounded-md transition-colors",
                       !isCurrentMonth && "opacity-30",
                       isToday && "bg-primary/10 border-primary/30",
                       isSelected && "ring-2 ring-primary"
@@ -262,14 +262,14 @@ export default function Agenda() {
                     <span className={cn("text-xs font-medium", isToday && "text-primary")}>
                       {format(day, "d")}
                     </span>
-                    <div className="mt-1 space-y-0.5">
-                      {dayMeetings.slice(0, 2).map((m) => (
-                        <div key={m.id} className="text-[10px] leading-tight truncate rounded bg-primary/15 text-primary px-1 py-0.5">
-                          {m.meeting_time.slice(0, 5)} {m.title}
+                    <div className="mt-0.5 sm:mt-1 space-y-0.5">
+                      {dayMeetings.slice(0, 1).map((m) => (
+                        <div key={m.id} className="text-[9px] sm:text-[10px] leading-tight truncate rounded bg-primary/15 text-primary px-0.5 sm:px-1 py-0.5">
+                          <span className="hidden sm:inline">{m.meeting_time.slice(0, 5)} </span>{m.title}
                         </div>
                       ))}
-                      {dayMeetings.length > 2 && (
-                        <span className="text-[10px] text-muted-foreground">+{dayMeetings.length - 2} mais</span>
+                      {dayMeetings.length > 1 && (
+                        <span className="text-[9px] sm:text-[10px] text-muted-foreground">+{dayMeetings.length - 1} mais</span>
                       )}
                     </div>
                   </button>

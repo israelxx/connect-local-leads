@@ -83,11 +83,11 @@ export function CrmLayout({ children }: CrmLayoutProps) {
     <SidebarProvider>
       <div className="min-h-screen flex w-full">
         <CrmSidebar />
-        <main className="flex-1 flex flex-col">
-          <header className="h-14 flex items-center border-b border-border px-4 bg-background">
+        <main className="flex-1 flex flex-col min-w-0">
+          <header className="h-14 flex items-center border-b border-border px-4 bg-background sticky top-0 z-10">
             <SidebarTrigger />
           </header>
-          <div className="flex-1 p-6 overflow-auto">
+          <div className="flex-1 p-3 sm:p-6 overflow-auto">
             {children}
           </div>
         </main>

@@ -205,19 +205,19 @@ export default function Financeiro() {
   };
 
   return (
-    <div className="space-y-6">
-      <div className="flex items-center justify-between">
+    <div className="space-y-4 sm:space-y-6">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
         <div>
-          <h1 className="text-3xl font-bold">Financeiro</h1>
-          <p className="text-muted-foreground">Contratos e faturamento</p>
+          <h1 className="text-2xl sm:text-3xl font-bold">Financeiro</h1>
+          <p className="text-sm text-muted-foreground">Contratos e faturamento</p>
         </div>
-        <Button onClick={() => { resetForm(); setDialogOpen(true); }}>
+        <Button onClick={() => { resetForm(); setDialogOpen(true); }} size="sm" className="w-full sm:w-auto">
           <Plus className="mr-2 h-4 w-4" /> Novo Contrato
         </Button>
       </div>
 
       {/* KPIs */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+      <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 sm:gap-4">
         <Card>
           <CardHeader className="flex flex-row items-center justify-between pb-2">
             <CardTitle className="text-sm font-medium">Contratos Ativos</CardTitle>
@@ -246,7 +246,7 @@ export default function Financeiro() {
         <Card>
           <CardHeader><CardTitle className="text-lg">Faturamento por Mês</CardTitle></CardHeader>
           <CardContent>
-            <div className="h-64">
+            <div className="h-48 sm:h-64">
               <ResponsiveContainer width="100%" height="100%">
                 <BarChart data={chartData}>
                   <CartesianGrid strokeDasharray="3 3" className="stroke-border" />
@@ -264,7 +264,8 @@ export default function Financeiro() {
       {/* Table */}
       <Card>
         <CardHeader><CardTitle className="text-lg">Contratos</CardTitle></CardHeader>
-        <CardContent>
+        <CardContent className="p-0 sm:p-6 sm:pt-0">
+          <div className="overflow-x-auto">
           <Table>
             <TableHeader>
               <TableRow>
@@ -303,6 +304,7 @@ export default function Financeiro() {
               ))}
             </TableBody>
           </Table>
+          </div>
         </CardContent>
       </Card>
 
