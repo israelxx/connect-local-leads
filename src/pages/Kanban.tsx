@@ -81,14 +81,14 @@ export default function Kanban() {
   }
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-4 sm:space-y-6">
       <div>
-        <h1 className="text-3xl font-bold">Kanban</h1>
-        <p className="text-muted-foreground mt-1">Arraste os cards para atualizar o status dos leads</p>
+        <h1 className="text-2xl sm:text-3xl font-bold">Kanban</h1>
+        <p className="text-sm text-muted-foreground mt-1">Arraste os cards para atualizar o status dos leads</p>
       </div>
 
       <DragDropContext onDragEnd={onDragEnd}>
-        <div className="flex gap-4 overflow-x-auto pb-4">
+        <div className="flex gap-3 sm:gap-4 overflow-x-auto pb-4 -mx-3 px-3 sm:mx-0 sm:px-0 snap-x snap-mandatory">
           {LEAD_STATUSES.map((status) => {
             const columnLeads = leads.filter((l) => l.status === status.value);
             const config = getStatusConfig(status.value);
@@ -99,7 +99,7 @@ export default function Kanban() {
                   <div
                     ref={provided.innerRef}
                     {...provided.droppableProps}
-                    className={`flex-shrink-0 w-72 rounded-lg border border-border p-3 transition-colors ${
+                    className={`flex-shrink-0 w-[260px] sm:w-72 rounded-lg border border-border p-2 sm:p-3 transition-colors snap-start ${
                       snapshot.isDraggingOver ? "bg-primary/5" : "bg-muted/30"
                     }`}
                   >

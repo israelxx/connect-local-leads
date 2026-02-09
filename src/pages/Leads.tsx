@@ -88,14 +88,14 @@ export default function Leads() {
   }
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-4 sm:space-y-6">
       <div>
-        <h1 className="text-3xl font-bold">Leads</h1>
-        <p className="text-muted-foreground mt-1">Gerencie todos os seus leads</p>
+        <h1 className="text-2xl sm:text-3xl font-bold">Leads</h1>
+        <p className="text-sm text-muted-foreground mt-1">Gerencie todos os seus leads</p>
       </div>
 
       {/* Stats */}
-      <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4">
         <Card>
           <CardHeader className="flex flex-row items-center justify-between pb-2">
             <CardTitle className="text-sm font-medium">Total</CardTitle>
