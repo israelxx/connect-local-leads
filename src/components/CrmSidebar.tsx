@@ -31,8 +31,8 @@ const mainNav = [
 ];
 
 const futureNav = [
-  { title: "Agenda", url: "/agenda", icon: CalendarDays, disabled: true },
-  { title: "Financeiro", url: "/financeiro", icon: DollarSign, disabled: true },
+  { title: "Agenda", url: "/agenda", icon: CalendarDays },
+  { title: "Financeiro", url: "/financeiro", icon: DollarSign },
 ];
 
 const adminNav = [
@@ -79,15 +79,15 @@ export function CrmSidebar() {
         </SidebarGroup>
 
         <SidebarGroup>
-          <SidebarGroupLabel>Em breve</SidebarGroupLabel>
+          <SidebarGroupLabel>Módulos</SidebarGroupLabel>
           <SidebarGroupContent>
             <SidebarMenu>
               {futureNav.map((item) => (
                 <SidebarMenuItem key={item.title}>
                   <SidebarMenuButton
-                    disabled={item.disabled}
+                    isActive={location.pathname === item.url}
+                    onClick={() => navigate(item.url)}
                     tooltip={item.title}
-                    className="opacity-50"
                   >
                     <item.icon className="h-4 w-4" />
                     <span>{item.title}</span>
