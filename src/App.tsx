@@ -12,18 +12,12 @@ import AppAdmin from "./AppAdmin";
 const appMode = import.meta.env.VITE_APP_MODE;
 
 const App = () => {
-  // Deploy público (domínio principal)
   if (appMode === "public") {
     return <AppPublic />;
   }
   
-  // Deploy administrativo (subdomínio)
-  if (appMode === "admin") {
-    return <AppAdmin />;
-  }
-  
-  // Desenvolvimento local - todas as rotas
-  return <AppPublic />;
+  // Admin mode or development — show full CRM
+  return <AppAdmin />;
 };
 
 export default App;
