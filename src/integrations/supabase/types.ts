@@ -54,6 +54,7 @@ export type Database = {
           segment: string
           service_type: string
           social_handle: string
+          status: string
         }
         Insert: {
           challenge: string
@@ -67,6 +68,7 @@ export type Database = {
           segment: string
           service_type?: string
           social_handle?: string
+          status?: string
         }
         Update: {
           challenge?: string
@@ -80,6 +82,7 @@ export type Database = {
           segment?: string
           service_type?: string
           social_handle?: string
+          status?: string
         }
         Relationships: []
       }

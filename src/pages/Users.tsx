@@ -5,7 +5,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
-import { ArrowLeft, Shield, ShieldOff, Search, UserCog, Mail } from "lucide-react";
+import { Shield, ShieldOff, Search, UserCog, Mail } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { checkUserRole } from "@/lib/roles";
 
@@ -185,7 +185,7 @@ export default function Users() {
 
   if (checkingAuth || loading) {
     return (
-      <div className="min-h-screen bg-background flex items-center justify-center">
+      <div className="flex items-center justify-center h-64">
         <div className="text-center space-y-4">
           <UserCog className="h-12 w-12 animate-pulse mx-auto text-primary" />
           <p className="text-muted-foreground">
@@ -197,44 +197,28 @@ export default function Users() {
   }
 
   return (
-    <div className="min-h-screen bg-background p-6">
-      <div className="max-w-6xl mx-auto space-y-6">
-        {/* Header */}
-        <div className="flex items-center justify-between">
-          <div className="flex items-center gap-4">
-            <Button
-              variant="ghost"
-              size="icon"
-              onClick={() => navigate("/dashboard")}
-            >
-              <ArrowLeft className="h-5 w-5" />
-            </Button>
-            <div>
-              <h1 className="text-3xl font-bold tracking-tight">
-                Gerenciamento de Usuários
-              </h1>
-              <p className="text-muted-foreground">
-                Controle de permissões e roles de admin
-              </p>
-            </div>
-          </div>
-        </div>
+    <div className="space-y-6">
+      {/* Header */}
+      <div>
+        <h1 className="text-3xl font-bold">Gerenciamento de Usuários</h1>
+        <p className="text-muted-foreground mt-1">Controle de permissões e roles de admin</p>
+      </div>
 
-        {/* Search */}
-        <Card>
-          <CardContent className="pt-6">
-            <div className="relative">
-              <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-              <Input
-                type="text"
-                placeholder="Buscar por email..."
-                value={searchTerm}
-                onChange={(e) => setSearchTerm(e.target.value)}
-                className="pl-10"
-              />
-            </div>
-          </CardContent>
-        </Card>
+      {/* Search */}
+      <Card>
+        <CardContent className="pt-6">
+          <div className="relative">
+            <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+            <Input
+              type="text"
+              placeholder="Buscar por email..."
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+              className="pl-10"
+            />
+          </div>
+        </CardContent>
+      </Card>
 
         {/* Info Card */}
         <Card className="bg-blue-50 dark:bg-blue-950 border-blue-200 dark:border-blue-800">
@@ -332,7 +316,6 @@ export default function Users() {
             )}
           </CardContent>
         </Card>
-      </div>
     </div>
   );
 }
