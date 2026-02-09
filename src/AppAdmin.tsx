@@ -8,6 +8,8 @@ import { CrmLayout } from "@/components/CrmLayout";
 import Dashboard from "./pages/Dashboard";
 import Kanban from "./pages/Kanban";
 import Leads from "./pages/Leads";
+import Agenda from "./pages/Agenda";
+import Financeiro from "./pages/Financeiro";
 import Login from "./pages/Login";
 import Users from "./pages/Users";
 import NotFound from "./pages/NotFound";
@@ -45,6 +47,22 @@ const AppAdmin = () => (
               element={
                 <CrmLayout>
                   <Leads />
+                </CrmLayout>
+              }
+            />
+            <Route
+              path="/agenda"
+              element={
+                <CrmLayout>
+                  <Agenda />
+                </CrmLayout>
+              }
+            />
+            <Route
+              path="/financeiro"
+              element={
+                <CrmLayout>
+                  <Financeiro />
                 </CrmLayout>
               }
             />

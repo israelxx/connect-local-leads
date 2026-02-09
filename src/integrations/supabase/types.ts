@@ -14,6 +14,53 @@ export type Database = {
   }
   public: {
     Tables: {
+      contracts: {
+        Row: {
+          created_at: string
+          end_date: string | null
+          id: string
+          lead_id: string | null
+          monthly_value: number
+          notes: string | null
+          start_date: string
+          status: string
+          title: string
+          value: number
+        }
+        Insert: {
+          created_at?: string
+          end_date?: string | null
+          id?: string
+          lead_id?: string | null
+          monthly_value?: number
+          notes?: string | null
+          start_date: string
+          status?: string
+          title: string
+          value?: number
+        }
+        Update: {
+          created_at?: string
+          end_date?: string | null
+          id?: string
+          lead_id?: string | null
+          monthly_value?: number
+          notes?: string | null
+          start_date?: string
+          status?: string
+          title?: string
+          value?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: "contracts_lead_id_fkey"
+            columns: ["lead_id"]
+            isOneToOne: false
+            referencedRelation: "leads"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       form_submissions: {
         Row: {
           created_at: string | null
@@ -85,6 +132,50 @@ export type Database = {
           status?: string
         }
         Relationships: []
+      }
+      meetings: {
+        Row: {
+          created_at: string
+          description: string | null
+          duration_minutes: number
+          id: string
+          lead_id: string | null
+          meeting_date: string
+          meeting_time: string
+          title: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          description?: string | null
+          duration_minutes?: number
+          id?: string
+          lead_id?: string | null
+          meeting_date: string
+          meeting_time: string
+          title: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          description?: string | null
+          duration_minutes?: number
+          id?: string
+          lead_id?: string | null
+          meeting_date?: string
+          meeting_time?: string
+          title?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "meetings_lead_id_fkey"
+            columns: ["lead_id"]
+            isOneToOne: false
+            referencedRelation: "leads"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       user_roles: {
         Row: {
