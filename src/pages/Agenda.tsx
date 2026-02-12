@@ -15,7 +15,7 @@ import {
   endOfWeek,
 } from "date-fns";
 import { ptBR } from "date-fns/locale";
-import { ChevronLeft, ChevronRight, Plus, Clock, Trash2, Edit2 } from "lucide-react";
+import { ChevronLeft, ChevronRight, Plus, Clock, Trash2, Edit2, Video, MapPin } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import {
@@ -47,6 +47,7 @@ interface Meeting {
   duration_minutes: number;
   lead_id: string | null;
   user_id: string;
+  meeting_type: string;
   leads?: { name: string; company: string } | null;
 }
 
@@ -67,6 +68,7 @@ export default function Agenda() {
     meeting_time: "09:00",
     duration_minutes: 30,
     lead_id: "",
+    meeting_type: "online",
   });
 
   const monthStart = startOfMonth(currentMonth);
@@ -85,7 +87,7 @@ export default function Agenda() {
         .lte("meeting_date", format(calendarEnd, "yyyy-MM-dd"))
         .order("meeting_time");
       if (error) throw error;
-      return data as Meeting[];
+      return (data as unknown as Meeting[]);
     },
   });
 
@@ -112,6 +114,7 @@ export default function Agenda() {
         meeting_time: values.meeting_time,
         duration_minutes: values.duration_minutes,
         lead_id: values.lead_id || null,
+        meeting_type: values.meeting_type,
         user_id: user.id,
       });
       if (error) throw error;
@@ -135,6 +138,7 @@ export default function Agenda() {
           meeting_time: values.meeting_time,
           duration_minutes: values.duration_minutes,
           lead_id: values.lead_id || null,
+          meeting_type: values.meeting_type,
         })
         .eq("id", id);
       if (error) throw error;
@@ -160,7 +164,7 @@ export default function Agenda() {
   });
 
   const resetForm = () => {
-    setForm({ title: "", description: "", meeting_date: "", meeting_time: "09:00", duration_minutes: 30, lead_id: "" });
+    setForm({ title: "", description: "", meeting_date: "", meeting_time: "09:00", duration_minutes: 30, lead_id: "", meeting_type: "online" });
     setEditingMeeting(null);
     setDialogOpen(false);
   };
@@ -180,6 +184,7 @@ export default function Agenda() {
       meeting_time: meeting.meeting_time.slice(0, 5),
       duration_minutes: meeting.duration_minutes,
       lead_id: meeting.lead_id || "",
+      meeting_type: meeting.meeting_type || "online",
     });
     setDialogOpen(true);
   };
@@ -306,6 +311,10 @@ export default function Agenda() {
                 <div className="flex items-center gap-2 text-xs text-muted-foreground">
                   <Clock className="h-3 w-3" />
                   {m.meeting_time.slice(0, 5)} • {m.duration_minutes}min
+                  <span className="inline-flex items-center gap-0.5 ml-1">
+                    {m.meeting_type === "presencial" ? <MapPin className="h-3 w-3" /> : <Video className="h-3 w-3" />}
+                    {m.meeting_type === "presencial" ? "Presencial" : "Online"}
+                  </span>
                 </div>
                 {m.leads && (
                   <Badge variant="secondary" className="text-xs">{m.leads.name} — {m.leads.company}</Badge>
@@ -359,6 +368,21 @@ export default function Agenda() {
                     ))}
                   </SelectContent>
                 </Select>
+              </div>
+            </div>
+            <div>
+              <Label>Tipo de Reunião</Label>
+              <div className="flex gap-4 mt-2">
+                <label className="flex items-center gap-2 cursor-pointer">
+                  <input type="radio" name="meeting_type" value="online" checked={form.meeting_type === "online"} onChange={() => setForm((f) => ({ ...f, meeting_type: "online" }))} className="accent-primary" />
+                  <Video className="h-4 w-4" />
+                  <span className="text-sm">Online</span>
+                </label>
+                <label className="flex items-center gap-2 cursor-pointer">
+                  <input type="radio" name="meeting_type" value="presencial" checked={form.meeting_type === "presencial"} onChange={() => setForm((f) => ({ ...f, meeting_type: "presencial" }))} className="accent-primary" />
+                  <MapPin className="h-4 w-4" />
+                  <span className="text-sm">Presencial</span>
+                </label>
               </div>
             </div>
             <div>
