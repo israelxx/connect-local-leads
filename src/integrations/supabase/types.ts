@@ -142,6 +142,7 @@ export type Database = {
           lead_id: string | null
           meeting_date: string
           meeting_time: string
+          meeting_type: string
           title: string
           user_id: string
         }
@@ -153,6 +154,7 @@ export type Database = {
           lead_id?: string | null
           meeting_date: string
           meeting_time: string
+          meeting_type?: string
           title: string
           user_id: string
         }
@@ -164,6 +166,7 @@ export type Database = {
           lead_id?: string | null
           meeting_date?: string
           meeting_time?: string
+          meeting_type?: string
           title?: string
           user_id?: string
         }

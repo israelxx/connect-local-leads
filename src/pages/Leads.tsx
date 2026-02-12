@@ -5,7 +5,16 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { LEAD_STATUSES, getStatusConfig } from "@/lib/lead-status";
-import { Search, Users, TrendingUp, BarChart, Target } from "lucide-react";
+import { Search, Users, TrendingUp, BarChart, Target, Plus } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { Label } from "@/components/ui/label";
+import { Textarea } from "@/components/ui/textarea";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
 
 interface Lead {
   id: string;
@@ -28,6 +37,10 @@ export default function Leads() {
   const [loading, setLoading] = useState(true);
   const [search, setSearch] = useState("");
   const [statusFilter, setStatusFilter] = useState<string>("all");
+  const [dialogOpen, setDialogOpen] = useState(false);
+  const [leadForm, setLeadForm] = useState({
+    name: "", company: "", email: "", phone: "", segment: "", challenge: "", revenue: "", service_type: "standard", social_handle: "",
+  });
 
   useEffect(() => {
     fetchLeads();
@@ -46,6 +59,34 @@ export default function Leads() {
       toast({ title: "Erro", description: "Não foi possível carregar os leads.", variant: "destructive" });
     } finally {
       setLoading(false);
+    }
+  };
+
+  const resetLeadForm = () => {
+    setLeadForm({ name: "", company: "", email: "", phone: "", segment: "", challenge: "", revenue: "", service_type: "standard", social_handle: "" });
+    setDialogOpen(false);
+  };
+
+  const handleCreateLead = async (e: React.FormEvent) => {
+    e.preventDefault();
+    try {
+      const { error } = await supabase.from("leads").insert({
+        name: leadForm.name,
+        company: leadForm.company,
+        email: leadForm.email,
+        phone: leadForm.phone,
+        segment: leadForm.segment,
+        challenge: leadForm.challenge,
+        revenue: leadForm.revenue || "",
+        service_type: leadForm.service_type,
+        social_handle: leadForm.social_handle || "",
+      });
+      if (error) throw error;
+      toast({ title: "Lead criado com sucesso" });
+      resetLeadForm();
+      fetchLeads();
+    } catch {
+      toast({ title: "Erro ao criar lead", variant: "destructive" });
     }
   };
 
@@ -89,9 +130,14 @@ export default function Leads() {
 
   return (
     <div className="space-y-4 sm:space-y-6">
-      <div>
-        <h1 className="text-2xl sm:text-3xl font-bold">Leads</h1>
-        <p className="text-sm text-muted-foreground mt-1">Gerencie todos os seus leads</p>
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+        <div>
+          <h1 className="text-2xl sm:text-3xl font-bold">Leads</h1>
+          <p className="text-sm text-muted-foreground mt-1">Gerencie todos os seus leads</p>
+        </div>
+        <Button onClick={() => setDialogOpen(true)} size="sm" className="w-full sm:w-auto">
+          <Plus className="mr-2 h-4 w-4" /> Novo Lead
+        </Button>
       </div>
 
       {/* Stats */}
@@ -233,6 +279,71 @@ export default function Leads() {
           </div>
         </CardContent>
       </Card>
+
+      {/* Lead Creation Dialog */}
+      <Dialog open={dialogOpen} onOpenChange={(o) => { if (!o) resetLeadForm(); setDialogOpen(o); }}>
+        <DialogContent className="max-h-[90vh] overflow-y-auto">
+          <DialogHeader>
+            <DialogTitle>Novo Lead</DialogTitle>
+          </DialogHeader>
+          <form onSubmit={handleCreateLead} className="space-y-4">
+            <div className="grid grid-cols-2 gap-4">
+              <div>
+                <Label>Nome *</Label>
+                <Input value={leadForm.name} onChange={(e) => setLeadForm((f) => ({ ...f, name: e.target.value }))} required />
+              </div>
+              <div>
+                <Label>Empresa *</Label>
+                <Input value={leadForm.company} onChange={(e) => setLeadForm((f) => ({ ...f, company: e.target.value }))} required />
+              </div>
+            </div>
+            <div className="grid grid-cols-2 gap-4">
+              <div>
+                <Label>Email *</Label>
+                <Input type="email" value={leadForm.email} onChange={(e) => setLeadForm((f) => ({ ...f, email: e.target.value }))} required />
+              </div>
+              <div>
+                <Label>Telefone *</Label>
+                <Input value={leadForm.phone} onChange={(e) => setLeadForm((f) => ({ ...f, phone: e.target.value }))} required />
+              </div>
+            </div>
+            <div className="grid grid-cols-2 gap-4">
+              <div>
+                <Label>Segmento *</Label>
+                <Input value={leadForm.segment} onChange={(e) => setLeadForm((f) => ({ ...f, segment: e.target.value }))} required />
+              </div>
+              <div>
+                <Label>Instagram</Label>
+                <Input value={leadForm.social_handle} onChange={(e) => setLeadForm((f) => ({ ...f, social_handle: e.target.value }))} placeholder="@perfil" />
+              </div>
+            </div>
+            <div className="grid grid-cols-2 gap-4">
+              <div>
+                <Label>Faturamento</Label>
+                <Input value={leadForm.revenue} onChange={(e) => setLeadForm((f) => ({ ...f, revenue: e.target.value }))} />
+              </div>
+              <div>
+                <Label>Tipo de Serviço</Label>
+                <Select value={leadForm.service_type} onValueChange={(v) => setLeadForm((f) => ({ ...f, service_type: v }))}>
+                  <SelectTrigger><SelectValue /></SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="standard">Padrão</SelectItem>
+                    <SelectItem value="prime_hub">PRIME HUB</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+            </div>
+            <div>
+              <Label>Desafio *</Label>
+              <Textarea value={leadForm.challenge} onChange={(e) => setLeadForm((f) => ({ ...f, challenge: e.target.value }))} required rows={3} />
+            </div>
+            <div className="flex gap-2 justify-end">
+              <Button type="button" variant="outline" onClick={resetLeadForm}>Cancelar</Button>
+              <Button type="submit">Criar Lead</Button>
+            </div>
+          </form>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 }
