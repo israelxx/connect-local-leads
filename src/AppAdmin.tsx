@@ -12,6 +12,7 @@ import Agenda from "./pages/Agenda";
 import Financeiro from "./pages/Financeiro";
 import Login from "./pages/Login";
 import Users from "./pages/Users";
+import Index from "./pages/Index";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -25,6 +26,7 @@ const AppAdmin = () => (
         <BrowserRouter>
           <Routes>
             <Route path="/" element={<Navigate to="/login" replace />} />
+            <Route path="/landing" element={<Index />} />
             <Route path="/login" element={<Login />} />
             <Route
               path="/dashboard"
