@@ -7,121 +7,74 @@ interface HeaderProps {
   onOpenForm: () => void;
 }
 
+const navItems = [
+  { label: "Início", id: "inicio" },
+  { label: "Pilares", id: "pilares" },
+  { label: "Serviços", id: "servicos" },
+  { label: "Planos", id: "planos" },
+  { label: "FAQ", id: "faq" },
+];
+
+const tickerItems = ["Crescer é estratégia", "Performance com método", "Marca forte vende mais", "Conteúdo com intenção", "Tráfego sem estratégia é desperdício"];
+
 export const Header = ({ onOpenForm }: HeaderProps) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   const scrollToSection = (id: string) => {
-    const element = document.getElementById(id);
-    if (element) {
-      element.scrollIntoView({ behavior: "smooth" });
-      setIsMenuOpen(false);
-    }
+    document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
+    setIsMenuOpen(false);
   };
 
   return (
-    <header className="fixed top-0 left-0 right-0 z-50 bg-background/80 backdrop-blur-lg border-b border-border">
-      <nav className="container mx-auto px-4 py-4">
-        <div className="flex items-center justify-between">
-          {/* Logo */}
-          <div className="flex items-center">
-            <img src={logo} alt="Pro Connect" className="h-10 w-auto" />
-          </div>
+    <header className="fixed left-0 right-0 top-0 z-50 border-b border-border bg-background/95 backdrop-blur-xl">
+      <nav className="mx-auto flex h-14 max-w-7xl items-center justify-between px-5 lg:px-8">
+        <button onClick={() => scrollToSection("inicio")} className="flex items-center" aria-label="ProConnect início">
+          <img src={logo} alt="ProConnect" className="h-7 w-auto" />
+        </button>
 
-          {/* Desktop Menu */}
-          <div className="hidden md:flex items-center space-x-8">
+        <div className="hidden items-center gap-7 md:flex">
+          {navItems.map((item) => (
             <button
-              onClick={() => scrollToSection("inicio")}
-              className="text-foreground hover:text-primary transition-colors font-medium"
+              key={item.id}
+              onClick={() => scrollToSection(item.id)}
+              className="text-xs font-bold uppercase text-foreground/75 transition-colors hover:text-primary"
             >
-              Início
+              {item.label}
             </button>
-            <button
-              onClick={() => scrollToSection("servicos")}
-              className="text-foreground hover:text-primary transition-colors font-medium"
-            >
-              Serviços
-            </button>
-            <button
-              onClick={() => scrollToSection("sobre")}
-              className="text-foreground hover:text-primary transition-colors font-medium"
-            >
-              Sobre Nós
-            </button>
-            <button
-              onClick={() => scrollToSection("resultados")}
-              className="text-foreground hover:text-primary transition-colors font-medium"
-            >
-              Resultados
-            </button>
-            <button
-              onClick={() => scrollToSection("contato")}
-              className="text-foreground hover:text-primary transition-colors font-medium"
-            >
-              Contato
-            </button>
-          </div>
-
-          {/* CTA Button */}
-          <div className="hidden md:block">
-            <Button
-              onClick={onOpenForm}
-              className="bg-primary hover:bg-primary/90 text-primary-foreground font-semibold px-6 shadow-lg hover:shadow-xl transition-all duration-300"
-            >
-              Quero ser cliente
-            </Button>
-          </div>
-
-          {/* Mobile Menu Button */}
-          <button
-            className="md:hidden text-foreground"
-            onClick={() => setIsMenuOpen(!isMenuOpen)}
-          >
-            {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
-          </button>
+          ))}
         </div>
 
-        {/* Mobile Menu */}
-        {isMenuOpen && (
-          <div className="md:hidden mt-4 pb-4 space-y-4 animate-fade-in">
-            <button
-              onClick={() => scrollToSection("inicio")}
-              className="block w-full text-left text-foreground hover:text-primary transition-colors font-medium py-2"
-            >
-              Início
-            </button>
-            <button
-              onClick={() => scrollToSection("servicos")}
-              className="block w-full text-left text-foreground hover:text-primary transition-colors font-medium py-2"
-            >
-              Serviços
-            </button>
-            <button
-              onClick={() => scrollToSection("sobre")}
-              className="block w-full text-left text-foreground hover:text-primary transition-colors font-medium py-2"
-            >
-              Sobre Nós
-            </button>
-            <button
-              onClick={() => scrollToSection("resultados")}
-              className="block w-full text-left text-foreground hover:text-primary transition-colors font-medium py-2"
-            >
-              Resultados
-            </button>
-            <button
-              onClick={() => scrollToSection("contato")}
-              className="block w-full text-left text-foreground hover:text-primary transition-colors font-medium py-2"
-            >
-              Contato
-            </button>
-            <Button
-              onClick={onOpenForm}
-              className="w-full bg-primary hover:bg-primary/90 text-primary-foreground font-semibold"
-            >
-              Quero ser cliente
+        <Button onClick={onOpenForm} size="sm" className="hidden rounded-none bg-primary px-5 text-xs font-extrabold uppercase text-primary-foreground hover:bg-primary/90 md:inline-flex">
+          Falar com especialista
+        </Button>
+
+        <button className="text-foreground md:hidden" onClick={() => setIsMenuOpen(!isMenuOpen)} aria-label="Abrir menu">
+          {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
+        </button>
+      </nav>
+
+      {isMenuOpen && (
+        <div className="border-t border-border bg-background px-5 py-5 md:hidden">
+          <div className="flex flex-col gap-4">
+            {navItems.map((item) => (
+              <button key={item.id} onClick={() => scrollToSection(item.id)} className="text-left font-display text-2xl font-extrabold uppercase text-foreground">
+                {item.label}
+              </button>
+            ))}
+            <Button onClick={onOpenForm} className="mt-2 rounded-none bg-primary font-extrabold uppercase text-primary-foreground hover:bg-primary/90">
+              Quero meu diagnóstico
             </Button>
           </div>
-        )}
-      </nav>
+        </div>
+      )}
+
+      <div className="h-6 overflow-hidden bg-primary text-primary-foreground">
+        <div className="flex w-max animate-marquee items-center gap-8 whitespace-nowrap py-1 text-[10px] font-extrabold uppercase">
+          {[...tickerItems, ...tickerItems, ...tickerItems, ...tickerItems].map((item, index) => (
+            <span key={`${item}-${index}`}>{item}</span>
+          ))}
+        </div>
+      </div>
     </header>
   );
 };

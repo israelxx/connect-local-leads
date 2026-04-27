@@ -210,12 +210,12 @@ export const LeadFormModal = ({ open, onOpenChange, serviceType = 'standard' }: 
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto">
+      <DialogContent className="max-h-[90vh] max-w-2xl overflow-y-auto rounded-none border-primary/40 bg-card text-card-foreground shadow-2xl">
         <DialogHeader>
-          <DialogTitle className="text-2xl font-bold">
+          <DialogTitle className="font-display text-3xl font-black text-primary">
             {serviceType === 'prime_hub' ? 'Consultoria PRIME HUB' : 'Fale com um Especialista'}
           </DialogTitle>
-          <DialogDescription>
+          <DialogDescription className="text-muted-foreground">
             {serviceType === 'prime_hub' 
               ? 'Preencha o formulário para agendar sua consultoria estratégica exclusiva com nosso CEO.'
               : 'Preencha o formulário abaixo e nossa equipe entrará em contato para apresentar as melhores soluções para o seu negócio.'}
@@ -384,7 +384,7 @@ export const LeadFormModal = ({ open, onOpenChange, serviceType = 'standard' }: 
             type="submit"
             size="lg"
             disabled={isSubmitting}
-            className="w-full bg-primary hover:bg-primary/90 text-primary-foreground font-semibold group disabled:opacity-50"
+            className="w-full rounded-none bg-primary font-extrabold uppercase text-primary-foreground hover:bg-primary/90 group disabled:opacity-50"
           >
             {isSubmitting ? "Enviando..." : "Enviar para um especialista"}
             <Send className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform" />

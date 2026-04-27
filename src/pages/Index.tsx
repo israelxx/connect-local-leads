@@ -5,10 +5,9 @@ import { LeadFormModal } from "@/components/LeadFormModal";
 
 // Lazy load components below the fold for faster initial load
 const WhyProConnect = lazy(() => import("@/components/WhyProConnect").then(m => ({ default: m.WhyProConnect })));
+const CEO = lazy(() => import("@/components/CEO").then(m => ({ default: m.CEO })));
 const Pillars = lazy(() => import("@/components/Pillars").then(m => ({ default: m.Pillars })));
 const Equipment = lazy(() => import("@/components/Equipment").then(m => ({ default: m.Equipment })));
-const CEO = lazy(() => import("@/components/CEO").then(m => ({ default: m.CEO })));
-const OurStructure = lazy(() => import("@/components/OurStructure").then(m => ({ default: m.OurStructure })));
 const Cases = lazy(() => import("@/components/Cases").then(m => ({ default: m.Cases })));
 const PrimeHub = lazy(() => import("@/components/PrimeHub").then(m => ({ default: m.PrimeHub })));
 const Guarantee = lazy(() => import("@/components/Guarantee").then(m => ({ default: m.Guarantee })));
@@ -30,10 +29,9 @@ const Index = () => {
       <Hero onOpenForm={() => handleOpenForm('standard')} />
       <Suspense fallback={<div className="min-h-[50vh]" />}>
         <WhyProConnect />
+        <CEO />
         <Pillars />
         <Equipment />
-        <CEO />
-        <OurStructure />
         <Cases />
         <PrimeHub onOpenForm={() => handleOpenForm('prime_hub')} />
         <Guarantee />

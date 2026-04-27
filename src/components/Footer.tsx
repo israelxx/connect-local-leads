@@ -1,96 +1,48 @@
+import { Instagram, Linkedin, Mail } from "lucide-react";
 import logo from "@/assets/logo-pro-connect.png";
-import { Facebook, Instagram, Linkedin } from "lucide-react";
+
+const links = [
+  ["Início", "inicio"],
+  ["Pilares", "pilares"],
+  ["Serviços", "servicos"],
+  ["Planos", "planos"],
+  ["FAQ", "faq"],
+];
 
 export const Footer = () => {
-  const scrollToSection = (id: string) => {
-    const element = document.getElementById(id);
-    if (element) {
-      element.scrollIntoView({ behavior: "smooth" });
-    }
-  };
+  const scrollToSection = (id: string) => document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
 
   return (
-    <footer className="bg-secondary text-secondary-foreground py-12 border-t border-secondary-foreground/10">
-      <div className="container mx-auto px-4">
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
-          {/* Logo and Description */}
-          <div className="md:col-span-2 space-y-4">
-            <img src={logo} alt="Pro Connect" className="h-10 w-auto" />
-            <p className="text-secondary-foreground/80 max-w-md">
-              Transformamos marketing em crescimento real. Conectando inteligência, performance e automação para o sucesso do seu negócio.
+    <footer className="border-t border-border bg-background py-14">
+      <div className="mx-auto max-w-7xl px-5 lg:px-8">
+        <div className="grid gap-10 md:grid-cols-[1.4fr_0.8fr_0.8fr]">
+          <div>
+            <img src={logo} alt="ProConnect" className="h-8 w-auto" />
+            <p className="mt-5 max-w-sm text-sm leading-relaxed text-muted-foreground">
+              Marketing estruturado para marcas que querem crescer com estratégia, conteúdo, tráfego e processo comercial.
             </p>
           </div>
-
-          {/* Quick Links */}
           <div>
-            <h3 className="font-semibold mb-4">Links Rápidos</h3>
-            <ul className="space-y-2">
-              <li>
-                <button
-                  onClick={() => scrollToSection("inicio")}
-                  className="text-secondary-foreground/80 hover:text-primary transition-colors"
-                >
-                  Início
+            <h3 className="font-display text-lg font-extrabold text-foreground">Navegação</h3>
+            <div className="mt-4 grid gap-2">
+              {links.map(([label, id]) => (
+                <button key={id} onClick={() => scrollToSection(id)} className="w-fit text-sm text-muted-foreground transition-colors hover:text-primary">
+                  {label}
                 </button>
-              </li>
-              <li>
-                <button
-                  onClick={() => scrollToSection("servicos")}
-                  className="text-secondary-foreground/80 hover:text-primary transition-colors"
-                >
-                  Serviços
-                </button>
-              </li>
-              <li>
-                <button
-                  onClick={() => scrollToSection("sobre")}
-                  className="text-secondary-foreground/80 hover:text-primary transition-colors"
-                >
-                  Sobre Nós
-                </button>
-              </li>
-              <li>
-                <button
-                  onClick={() => scrollToSection("contato")}
-                  className="text-secondary-foreground/80 hover:text-primary transition-colors"
-                >
-                  Contato
-                </button>
-              </li>
-            </ul>
+              ))}
+            </div>
           </div>
-
-          {/* Social Media */}
           <div>
-            <h3 className="font-semibold mb-4">Redes Sociais</h3>
-            <div className="flex gap-4">
-              <a
-                href="#"
-                className="w-10 h-10 rounded-full bg-secondary-foreground/10 hover:bg-primary flex items-center justify-center transition-all duration-300"
-              >
-                <Facebook className="w-5 h-5" />
-              </a>
-              <a
-                href="https://www.instagram.com/proconnectagency_/"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="w-10 h-10 rounded-full bg-secondary-foreground/10 hover:bg-primary flex items-center justify-center transition-all duration-300"
-              >
-                <Instagram className="w-5 h-5" />
-              </a>
-              <a
-                href="#"
-                className="w-10 h-10 rounded-full bg-secondary-foreground/10 hover:bg-primary flex items-center justify-center transition-all duration-300"
-              >
-                <Linkedin className="w-5 h-5" />
-              </a>
+            <h3 className="font-display text-lg font-extrabold text-foreground">Redes</h3>
+            <div className="mt-4 flex gap-3">
+              <a href="mailto:pro.conectt@gmail.com" className="text-muted-foreground hover:text-primary" aria-label="Email"><Mail className="h-5 w-5" /></a>
+              <a href="https://www.instagram.com/proconnectagency_/" target="_blank" rel="noopener noreferrer" className="text-muted-foreground hover:text-primary" aria-label="Instagram"><Instagram className="h-5 w-5" /></a>
+              <a href="#" className="text-muted-foreground hover:text-primary" aria-label="LinkedIn"><Linkedin className="h-5 w-5" /></a>
             </div>
           </div>
         </div>
-
-        {/* Copyright */}
-        <div className="pt-8 border-t border-secondary-foreground/10 text-center text-secondary-foreground/60">
-          <p>© {new Date().getFullYear()} Pro Connect. Todos os direitos reservados.</p>
+        <div className="mt-12 border-t border-border pt-6 text-xs text-muted-foreground">
+          © {new Date().getFullYear()} ProConnect. Todos os direitos reservados.
         </div>
       </div>
     </footer>
