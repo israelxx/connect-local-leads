@@ -23,7 +23,7 @@ export const Hero = ({ onOpenForm }: HeroProps) => {
             <Button onClick={onOpenForm} size="lg" className="h-12 rounded-none bg-primary px-8 text-xs font-extrabold uppercase text-primary-foreground hover:bg-primary/90">
               Quero crescer agora <ArrowRight className="ml-2 h-4 w-4" />
             </Button>
-            <Button onClick={() => document.getElementById("resultados")?.scrollIntoView({ behavior: "smooth" })} size="lg" variant="outline" className="h-12 rounded-none border-primary/60 bg-transparent px-8 text-xs font-extrabold uppercase text-primary hover:bg-primary/10">
+            <Button onClick={onOpenForm} size="lg" variant="outline" className="h-12 rounded-none border-primary/60 bg-transparent px-8 text-xs font-extrabold uppercase text-primary hover:bg-primary/10">
               Ver resultados
             </Button>
           </div>
