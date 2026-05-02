@@ -68,8 +68,8 @@ export const Header = ({ onOpenForm }: HeaderProps) => {
         </div>
       )}
 
-      <div className="h-6 overflow-hidden bg-primary text-primary-foreground">
-        <div className="flex w-max animate-marquee items-center gap-8 whitespace-nowrap py-1 text-[10px] font-extrabold uppercase">
+      <div className="group h-6 overflow-hidden bg-primary text-primary-foreground">
+        <div className="flex w-max animate-marquee items-center gap-8 whitespace-nowrap py-1 text-[10px] font-extrabold uppercase group-hover:[animation-play-state:paused]">
           {[...tickerItems, ...tickerItems, ...tickerItems, ...tickerItems].map((item, index) => (
             <span key={`${item}-${index}`}>{item}</span>
           ))}
