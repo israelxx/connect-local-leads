@@ -123,7 +123,7 @@ export default {
         "scale-in": "scale-in 0.4s ease-out",
         "slide-in-right": "slide-in-right 0.3s ease-out",
         "glow": "glow 3s ease-in-out infinite",
-        "marquee": "marquee 24s linear infinite",
+        "marquee": "marquee 35s linear infinite",
       },
     },
   },
