@@ -24,7 +24,7 @@ export const PrimeHub = ({ onOpenForm }: PrimeHubProps) => {
               <ul className="mt-6 space-y-3 text-sm text-muted-foreground">
                 {plan.items.map((item) => <li key={item}>— {item}</li>)}
               </ul>
-              <Button onClick={onOpenForm} variant={plan.featured ? "default" : "outline"} className="mt-8 w-full rounded-none font-bold uppercase">
+              <Button onClick={() => document.getElementById("formulario")?.scrollIntoView({ behavior: "smooth" })} variant={plan.featured ? "default" : "outline"} className="mt-8 w-full rounded-none font-bold uppercase">
                 Falar com especialista
               </Button>
             </article>
