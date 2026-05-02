@@ -5,6 +5,8 @@ interface HeroProps {
   onOpenForm: () => void;
 }
 
+const scrollToForm = () => document.getElementById("formulario")?.scrollIntoView({ behavior: "smooth" });
+
 export const Hero = ({ onOpenForm }: HeroProps) => {
   return (
     <section id="inicio" className="relative flex min-h-[92vh] items-center overflow-hidden bg-background pt-24">
@@ -20,10 +22,10 @@ export const Hero = ({ onOpenForm }: HeroProps) => {
             A ProConnect estrutura o crescimento de marcas que já validaram seu produto — mas travaram para escalar.
           </p>
           <div className="mt-8 flex flex-col items-center justify-center gap-3 sm:flex-row">
-            <Button onClick={onOpenForm} size="lg" className="h-12 rounded-none bg-primary px-8 text-xs font-extrabold uppercase text-primary-foreground hover:bg-primary/90">
+            <Button onClick={scrollToForm} size="lg" className="h-12 rounded-none bg-primary px-8 text-xs font-extrabold uppercase text-primary-foreground hover:bg-primary/90">
               Quero crescer agora <ArrowRight className="ml-2 h-4 w-4" />
             </Button>
-            <Button onClick={onOpenForm} size="lg" variant="outline" className="h-12 rounded-none border-primary/60 bg-transparent px-8 text-xs font-extrabold uppercase text-primary hover:bg-primary/10">
+            <Button onClick={scrollToForm} size="lg" variant="outline" className="h-12 rounded-none border-primary/60 bg-transparent px-8 text-xs font-extrabold uppercase text-primary hover:bg-primary/10">
               Ver resultados
             </Button>
           </div>

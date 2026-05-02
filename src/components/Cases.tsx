@@ -22,7 +22,7 @@ export const Cases = () => {
         </div>
         <div className="mt-10 text-center">
           <p className="mb-5 text-[10px] font-bold uppercase tracking-normal">Dados reais extraídos de campanhas acompanhadas pelo nosso time.</p>
-          <Button onClick={() => document.getElementById("contato")?.scrollIntoView({ behavior: "smooth" })} variant="outline" className="rounded-none border-background bg-transparent text-background hover:bg-background hover:text-foreground">
+          <Button onClick={() => document.getElementById("formulario")?.scrollIntoView({ behavior: "smooth" })} variant="outline" className="rounded-none border-background bg-transparent text-background hover:bg-background hover:text-foreground">
             Ver meu caso <ArrowRight className="ml-2 h-4 w-4" />
           </Button>
         </div>

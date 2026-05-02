@@ -44,7 +44,7 @@ export const Header = ({ onOpenForm }: HeaderProps) => {
           ))}
         </div>
 
-        <Button onClick={onOpenForm} size="sm" className="hidden rounded-none bg-primary px-5 text-xs font-extrabold uppercase text-primary-foreground hover:bg-primary/90 md:inline-flex">
+        <Button onClick={() => scrollToSection("formulario")} size="sm" className="hidden rounded-none bg-primary px-5 text-xs font-extrabold uppercase text-primary-foreground hover:bg-primary/90 md:inline-flex">
           Falar com especialista
         </Button>
 
@@ -61,7 +61,7 @@ export const Header = ({ onOpenForm }: HeaderProps) => {
                 {item.label}
               </button>
             ))}
-            <Button onClick={onOpenForm} className="mt-2 rounded-none bg-primary font-extrabold uppercase text-primary-foreground hover:bg-primary/90">
+            <Button onClick={() => scrollToSection("formulario")} className="mt-2 rounded-none bg-primary font-extrabold uppercase text-primary-foreground hover:bg-primary/90">
               Quero meu diagnóstico
             </Button>
           </div>
